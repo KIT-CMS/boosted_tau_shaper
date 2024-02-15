@@ -4,3 +4,7 @@
 [submodule "ntuple_processor"]
 	path = ntuple_processor
 	url = git@github.com:KIT-CMS/ntuple_processor.git
+[submodule "datasets"]
+	path = KingMaker_sample_database
+	url = git@github.com:KIT-CMS/KingMaker_sample_database.git
+	branch = boost_htt
