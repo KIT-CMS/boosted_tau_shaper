@@ -1,0 +1,10 @@
+dbs: /sample/not/published
+era: 2016postVFP
+filelist:
+ - root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/HLepRare/HTT_skim_v1/Run2_2016/SingleMuon_Run2016F/nanoHTT_0.root
+generator_weight: 1.0
+nevents: 1537310
+nfiles: 1
+nick: SingleMuon_Run2016F-UL2016
+sample_type: data
+xsec: 1.0

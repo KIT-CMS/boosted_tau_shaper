@@ -1,0 +1,162 @@
+DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 1035962
+  nfiles: 4
+  nick: DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: dyjets
+  xsec: 20460.0
+DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 0.6631629507642596
+  nevents: 31045801
+  nfiles: 25
+  nick: DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: dyjets
+  xsec: 6077.22
+DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 34529675
+  nfiles: 26
+  nick: DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: dyjets
+  xsec: 6077.22
+ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 5472246
+  nfiles: 10
+  nick: ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: singletop
+  xsec: 80.0
+ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 10789165
+  nfiles: 20
+  nick: ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: singletop
+  xsec: 134.2
+ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 925035
+  nfiles: 2
+  nick: ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: singletop
+  xsec: 39.65
+ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 903147
+  nfiles: 2
+  nick: ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: singletop
+  xsec: 39.65
+SingleMuon_Run2016F-UL2016:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 1537310
+  nfiles: 1
+  nick: SingleMuon_Run2016F-UL2016
+  sample_type: data
+  xsec: 1.0
+SingleMuon_Run2016G-UL2016:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 28922874
+  nfiles: 13
+  nick: SingleMuon_Run2016G-UL2016
+  sample_type: data
+  xsec: 1.0
+SingleMuon_Run2016H-UL2016:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 34444121
+  nfiles: 15
+  nick: SingleMuon_Run2016H-UL2016
+  sample_type: data
+  xsec: 1.0
+TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 34280482
+  nfiles: 32
+  nick: TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: ttbar
+  xsec: 88.51
+TTToHadronic_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 21664207
+  nfiles: 42
+  nick: TTToHadronic_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: ttbar
+  xsec: 379.05
+TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 73793427
+  nfiles: 86
+  nick: TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: ttbar
+  xsec: 366.34
+WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 0.5820466229287775
+  nevents: 2592280
+  nfiles: 6
+  nick: WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: wjets
+  xsec: 61526.7
+WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 5875256
+  nfiles: 15
+  nick: WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: wjets
+  xsec: 61526.7
+WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 4910557
+  nfiles: 5
+  nick: WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: diboson
+  xsec: 5.213
+ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 6663930
+  nfiles: 7
+  nick: ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: diboson
+  xsec: 0.9738
+ZZTo4L_TuneCP5_13TeV_powheg_pythia8_RunIISummer20UL16NanoAODv12-106X:
+  dbs: /sample/not/published
+  era: 2016postVFP
+  generator_weight: 1.0
+  nevents: 22358170
+  nfiles: 21
+  nick: ZZTo4L_TuneCP5_13TeV_powheg_pythia8_RunIISummer20UL16NanoAODv12-106X
+  sample_type: diboson
+  xsec: 1.325
