@@ -144,7 +144,7 @@ def main(info):
             #     "VVT", "VVL", "VVJ", "W_NLO", "TTT", "TTL", "TTJ", "ZJ_NLO", "ZL_NLO", "ZTT_NLO"    # if now QCD_NLO or W_NLO is available, use QCD and W instead
             # ]
             bkg_processes = [
-                "ZTT_NLO"  # just try to do it by process
+                "VVT", "VVL", "VVJ", "W_NLO", "TTT", "TTL", "TTJ", "ZJ_NLO", "ZL_NLO", "ZTT_NLO"  # just try to do it by process
             ]
         else:
             # bkg_processes = [
