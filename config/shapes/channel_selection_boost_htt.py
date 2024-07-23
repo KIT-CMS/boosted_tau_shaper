@@ -63,7 +63,7 @@ def channel_selection(channel, era, special=None, boosted_tau=False):
                 #  Add channel specific cuts to the list of cuts.
                 cuts.extend(
                     [
-                        ("fj_Xtm_particleNet_XtmVsQCD > 0.85", "tau_iso"),
+                        ("fj_Xtm_particleNet_XtmVsQCD > 0.05", "tau_iso"),
                   
                     ]
                 )
@@ -95,8 +95,8 @@ def channel_selection(channel, era, special=None, boosted_tau=False):
                     # )
                     cuts.append(
                         (
-                            "pt_2>30 && ( (pt_1>=28 && (trg_single_mu27 == 1)) || (pt_1>=25 && pt_1 < 28 && (trg_single_mu24 == 1)))",
-                            "trg_selection",
+                            "fj_XtmVsQCD_pt>100",
+                            "pt_selection",
                         ),  # TODO add nonHPS Triggerflag for also MC
                     )
                 else:
