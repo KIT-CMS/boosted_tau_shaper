@@ -88,14 +88,9 @@ def MC_base_process_selection(channel, era, boosted_tau=False):
                     "trgweight",
                 )
         elif boosted_tau:
-            # isoweight = ("iso_wgt_good_mu_1", "isoweight")
-            # idweight = ("id_wgt_good_mu_1", "idweight")
             isoweight = None
             idweight = None
-            tauidweight = (
-                "((fatjet_gen_match_2==5)*1 + (fatjet_gen_match_2!=5))" ,
-                "taubyIsoIdWeight",
-            )
+            tauidweight = None
             vsmu_weight = None
             vsele_weight = None
             if era == "2016preVFP" or era == "2016postVFP":
