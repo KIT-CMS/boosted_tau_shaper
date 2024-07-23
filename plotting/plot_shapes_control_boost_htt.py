@@ -75,6 +75,10 @@ def parse_arguments():
         type=str,
         default=None,
         help="Plot a special category instead of nominal")
+    parser.add_argument(
+        "--boost",
+        action="store_true",
+        help="Plot boosted H->tau tau without genmatching")
 
     return parser.parse_args()
 
@@ -117,6 +121,8 @@ def main(info):
     bkg_processes = [
         "VVL", "TTL", "ZL", "jetFakesEMB", "EMB"
     ]
+    if args.boost and not args.embedding and not args.fake_factor:
+        bkg_processes = ["ZTT", "TTT", "VVT", "W", ]
     if not args.fake_factor and args.embedding:
         if args.nlo:
             bkg_processes = [
@@ -135,21 +141,14 @@ def main(info):
             bkg_processes = [
                 "VVT", "VVL", "TTL", "ZL", "jetFakes", "ZTT"
             ]
-    if not args.embedding and not args.fake_factor:
+    if not args.embedding and not args.fake_factor and not args.boost:
         if args.nlo:
-            # bkg_processes = [
-            #     "QCD_NLO", "VVT", "VVL", "VVJ", "W_NLO", "TTT", "TTL", "TTJ", "ZJ_NLO", "ZL_NLO", "ZTT_NLO"    # if now QCD_NLO or W_NLO is available, use QCD and W instead
-            # ]
-            # bkg_processes = [
-            #     "VVT", "VVL", "VVJ", "W_NLO", "TTT", "TTL", "TTJ", "ZJ_NLO", "ZL_NLO", "ZTT_NLO"    # if now QCD_NLO or W_NLO is available, use QCD and W instead
-            # ]
+
             bkg_processes = [
                 "VVT", "VVL", "VVJ", "W_NLO", "TTT", "TTL", "TTJ", "ZJ_NLO", "ZL_NLO", "ZTT_NLO"  # just try to do it by process
             ]
         else:
-            # bkg_processes = [
-            #     "QCD", "VVT", "VVL", "VVJ", "W", "TTT", "TTL", "TTJ", "ZJ", "ZL", "ZTT"
-            # ]
+
             bkg_processes = [
                  "VVL", "VVJ", "W", "TTT", "TTL", "TTJ", "ZJ", "ZL", "ZTT"
             ]
@@ -270,12 +269,11 @@ def main(info):
 
     for index,process in enumerate(bkg_processes):
         print("$$$$$$$$$$$$$$$$$$$$ index, process", index, process)
-        print("rootfile type: ", type(rootfile.get(channel, process, category=cat, shape_type=stype)))
+        print("rootfile type: ", type(rootfile.get_boost_file(channel, process, category=cat, shape_type=stype)))
         if index == 0:
-            total_bkg = rootfile.get(channel, process, category=cat, shape_type=stype).Clone()
-            print("this is a zeroth index process", process)
+            total_bkg = rootfile.get_boost_file(channel, process, category=cat, shape_type=stype).Clone()
         else:
-            total_bkg.Add(rootfile.get(channel, process, category=cat, shape_type=stype))
+            total_bkg.Add(rootfile.get_boost_file(channel, process, category=cat, shape_type=stype))
         if process in ["jetFakesEMB", "jetFakes"] and channel == "tt":
             total_bkg.Add(rootfile.get(channel, "wFakes", category=cat, shape_type=stype))
             jetfakes_hist = rootfile.get(channel, process, category=cat, shape_type=stype)
@@ -285,7 +283,7 @@ def main(info):
                 jetfakes_hist, process, "bkg")
         else:
             plot.add_hist(
-                rootfile.get(channel, process, category=cat, shape_type=stype), process, "bkg")
+                rootfile.get_boost_file(channel, process, category=cat, shape_type=stype), process, "bkg")
         plot.setGraphStyle(
             process, "hist", fillcolor=styles.color_dict[process])
 
@@ -641,5 +639,6 @@ if __name__ == "__main__":
             os.mkdir("%s_plots_%s/%s"%(args.era,postfix,ch))
         for v in variables:
             infolist.append({"args" : args, "channel" : ch, "variable" : v})
+    # main(infolist[0])
     pool = Pool(1)
     pool.map(main, infolist)
