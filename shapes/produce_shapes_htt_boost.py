@@ -620,18 +620,6 @@ def get_control_units(
         binning=control_binning,
         variables=variable_set,
     )
-    # add_control_process(
-    #     control_units,
-    #     name="emb",
-    #     dataset=datasets["EMB"],
-    #     selections=[
-    #         channel_selection(channel, era, special_analysis, boosted_tau),
-    #         ZTT_embedded_process_selection(channel, era, boosted_tau),
-    #     ],
-    #     channel=channel,
-    #     binning=control_binning,
-    #     variables=variable_set,
-    # )
     add_control_process(
         control_units,
         name="ztt",
@@ -841,6 +829,136 @@ def get_control_units(
 
     return control_units
 
+def get_control_units_no_genmatch(
+    channel, era, datasets, special_analysis, variables, boosted_tau = False, do_gofs=False, do_2dGofs=False
+):
+    control_units = {}
+    control_binning = default_control_binning
+    if do_gofs:
+        # in this case we have to load the binning from the gof yaml file
+        control_binning = load_gof_binning(era, channel)
+        # also build all aviailable 2D variables from the 1D variables
+        if do_2dGofs:
+            variables_2d = []
+            for var1 in variables:
+                for var2 in variables:
+                    if var1 == var2:
+                        continue
+                    elif f"{var1}_{var2}" in control_binning[channel]:
+                        variables_2d.append(f"{var1}_{var2}")
+                    elif f"{var2}_{var1}" in control_binning[channel]:
+                        variables_2d.append(f"{var2}_{var1}")
+                    else:
+                        raise ValueError(
+                            "No binning found for 2D variable from {} and {}".format(
+                                var1, var2
+                            )
+                        )
+            variables.extend(variables_2d)
+            logger.info(
+                "Will run GoFs for {} variables, indluding {} 2D variables".format(
+                    len(variables) - len(variables_2d), len(variables_2d)
+                )
+            )
+        logger.debug("Variables: {}".format(variables))
+    # check that all variables are available
+    variable_set = set()
+    for variable in set(variables):
+        if variable not in control_binning[channel]:
+            raise Exception("Variable %s not available in control_binning" % variable)
+        else:
+            variable_set.add(variable)
+    # variable_set = set(control_binning[channel].keys()) & set(args.control_plot_set)
+    logger.info("[INFO] Running control plots for variables: {}".format(variable_set))
+    add_control_process(
+        control_units,
+        name="data",
+        dataset=datasets["data"],
+        selections=channel_selection(channel, era, special_analysis, boosted_tau),
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
+    add_control_process(
+        control_units,
+        name="ztt",
+        dataset=datasets["DY"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            DY_process_selection(channel, era, boosted_tau),
+            
+        ],
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
+    
+    add_control_process(
+        control_units,
+        name="ztt_nlo",
+        dataset=datasets["DYNLO"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            DY_NLO_process_selection(channel, era, boosted_tau),
+        ],
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
+    add_control_process(
+        control_units,
+        name="ttt",
+        dataset=datasets["TT"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            TT_process_selection(channel, era, boosted_tau),
+            
+        ],
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
+    add_control_process(
+        control_units,
+        name="vvt",
+        dataset=datasets["VV"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            VV_process_selection(channel, era, boosted_tau),
+            
+        ],
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
+    if channel != "mm":
+        add_control_process(
+            control_units,
+            name="w_nlo",
+            dataset=datasets["W_NLO"],
+            selections=[
+                channel_selection(channel, era, special_analysis, boosted_tau),
+                W_process_selection(channel, era, boosted_tau),
+            ],
+            channel=channel,
+            binning=control_binning,
+            variables=variable_set,
+        )
+
+    add_control_process(
+        control_units,
+        name="w",
+        dataset=datasets["W"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            W_process_selection(channel, era, boosted_tau),
+        ],
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
+
+    return control_units
 
 def prepare_special_analysis(special):
     if special is None:
@@ -887,7 +1005,7 @@ def main(args):
             xrootd=args.xrootd, validation_tag=args.validation_tag
         )
         if args.control_plots:
-            nominals[era]["units"][channel] = get_control_units(
+            nominals[era]["units"][channel] = get_control_units_no_genmatch(
                 channel,
                 era,
                 nominals[era]["datasets"][channel],
@@ -1007,6 +1125,7 @@ def main(args):
         chname_: jetFakesDS[chname_] | leptonFakesS | trueTauBkgS | signalsS
         for chname_ in ["et", "mt", "tt", "em"]
     }
+    boosted_proc = {"data", "ztt", "ztt_nlo", "ttt", "vvt", "w", "w_nlo"}
     logger.info(f"Processes to be computed: {procS}")
     logger.info(f"Simulated processes: {simulatedProcsDS}")
     logger.info(f"Data processes: {dataS}")
@@ -1040,7 +1159,7 @@ def main(args):
         #         variations=[same_sign],
         #         enable_check=do_check,
         #     )
-        if channel in ["mt", "et"]:
+        if channel in ["mt", "et"] and args.boosted_tau_analysis == False:
             book_histograms(
                 um,
                 processes=dataS | trueTauBkgS | leptonFakesS,
@@ -1055,6 +1174,14 @@ def main(args):
                 processes=jetFakesDS[channel],
                 datasets=nominals[era]["units"][channel],
                 # variations=[same_sign],
+                variations=[],
+                enable_check=do_check,
+            )
+        if channel in ["mt", "et"] and args.boosted_tau_analysis == True:
+            book_histograms(
+                um,
+                processes=boosted_proc,
+                datasets=nominals[era]["units"][channel],
                 variations=[],
                 enable_check=do_check,
             )
