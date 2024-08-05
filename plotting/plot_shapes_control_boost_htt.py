@@ -431,7 +431,7 @@ def main(info):
             1000 * plot.subplot(0).get_hist("data_obs").GetMaximum())
 
     # plot.subplot(2).setYlims(0.75, 1.45)
-    plot.subplot(2).setYlims(0.55, 1.45)
+    plot.subplot(2).setYlims(0.55, 1.85)
     # if channel == "mm":
     #     plot.subplot(0).setLogY()
     #     plot.subplot(0).setYlims(1, 10**10)

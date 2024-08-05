@@ -35,25 +35,25 @@ from config.shapes.process_selection_htt_boost import (
     TT_process_selection,
     VV_process_selection,
     W_process_selection,
-    ZTT_process_selection,
-    ZL_process_selection,
-    ZJ_process_selection,
-    TTT_process_selection,
-    TTL_process_selection,
-    TTJ_process_selection,
-    VVT_process_selection,
-    VVJ_process_selection,
-    VVL_process_selection,
-    ggH125_process_selection,
-    qqH125_process_selection,
-    ZTT_embedded_process_selection,
-    ZH_process_selection,
-    WH_process_selection,
-    ggHWW_process_selection,
-    qqHWW_process_selection,
-    ZHWW_process_selection,
-    WHWW_process_selection,
-    ttH_process_selection,
+    # ZTT_process_selection,
+    # ZL_process_selection,
+    # ZJ_process_selection,
+    # TTT_process_selection,
+    # TTL_process_selection,
+    # TTJ_process_selection,
+    # VVT_process_selection,
+    # VVJ_process_selection,
+    # VVL_process_selection,
+    # ggH125_process_selection,
+    # qqH125_process_selection,
+    # ZTT_embedded_process_selection,
+    # ZH_process_selection,
+    # WH_process_selection,
+    # ggHWW_process_selection,
+    # qqHWW_process_selection,
+    # ZHWW_process_selection,
+    # WHWW_process_selection,
+    # ttH_process_selection,
 )
 
 # from config.shapes.category_selection import categorization
@@ -1578,5 +1578,5 @@ if __name__ == "__main__":
         log_file = args.output_file.replace(".root", ".log")
     else:
         log_file = "{}.log".format(args.output_file)
-    setup_logging(log_file, logging.INFO)
+    setup_logging(log_file, logging.DEBUG)
     main(args)

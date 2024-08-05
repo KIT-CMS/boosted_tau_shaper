@@ -85,13 +85,13 @@ common_bining_boost_htt = {
     "fj_Xtm_eta" : Histogram("fj_Xtm_eta", "fj_Xtm_eta", np.linspace(-2.5, 2.5, 50)),
     "fj_Xtm_mass" : Histogram("fj_Xtm_mass", "fj_Xtm_mass", np.arange(20, 250, 10)),
     "fj_Xtm_phi" : Histogram("fj_Xtm_phi", "fj_Xtm_phi", np.linspace(-3.14, 3.14, 50)),
-    "fj_Xtm_particleNet_XtmVsQCD" : Histogram("fj_Xtm_particleNet_XtmVsQCD", "fj_Xtm_particleNet_XtmVsQCD", np.arange(0, 1, 10)),
-    "fj_Xte_particleNet_XteVsQCD" : Histogram("fj_Xte_particleNet_XteVsQCD", "fj_Xte_particleNet_XteVsQCD", np.arange(0, 1, 10)),
-    "fj_Xtt_particleNet_XttVsQCD" : Histogram("fj_Xtt_particleNet_XttVsQCD", "fj_Xtt_particleNet_XttVsQCD", np.arange(0, 1, 10)),
+    "fj_Xtm_particleNet_XtmVsQCD" : Histogram("fj_Xtm_particleNet_XtmVsQCD", "fj_Xtm_particleNet_XtmVsQCD", np.linspace(0, 1, 20)),
+    "fj_Xte_particleNet_XteVsQCD" : Histogram("fj_Xte_particleNet_XteVsQCD", "fj_Xte_particleNet_XteVsQCD", np.linspace(0, 1, 20) ),
+    "fj_Xtt_particleNet_XttVsQCD" : Histogram("fj_Xtt_particleNet_XttVsQCD", "fj_Xtt_particleNet_XttVsQCD", np.linspace(0, 1, 20)),
 
     "fj_Xtm_msoftdrop" : Histogram("fj_Xtm_msoftdrop", "fj_Xtm_msoftdrop", np.arange(20, 250, 10)),
-    "fj_Xtm_nsubjettiness_2over1": Histogram("fj_Xtm_nsubjettiness_2over1", "fj_Xtm_nsubjettiness_2over1", np.arange(0, 1, 10)),
-    "fj_Xtm_nsubjettiness_3over2": Histogram("fj_Xtm_nsubjettiness_3over2", "fj_Xtm_nsubjettiness_3over2", np.arange(0, 1, 10)),
+    "fj_Xtm_nsubjettiness_2over1": Histogram("fj_Xtm_nsubjettiness_2over1", "fj_Xtm_nsubjettiness_2over1", np.linspace(0, 1, 20)),
+    "fj_Xtm_nsubjettiness_3over2": Histogram("fj_Xtm_nsubjettiness_3over2", "fj_Xtm_nsubjettiness_3over2", np.linspace(0, 1, 20)),
 
 
 }
