@@ -93,6 +93,10 @@ common_bining_boost_htt = {
     "fj_Xtm_nsubjettiness_2over1": Histogram("fj_Xtm_nsubjettiness_2over1", "fj_Xtm_nsubjettiness_2over1", np.linspace(0, 1, 20)),
     "fj_Xtm_nsubjettiness_3over2": Histogram("fj_Xtm_nsubjettiness_3over2", "fj_Xtm_nsubjettiness_3over2", np.linspace(0, 1, 20)),
 
+    "muons_finalstate" : Histogram("muons_finalstate", "muons_finalstate", np.linspace(0, 20, 20)),
+    "eles_finalstate" : Histogram("eles_finalstate", "eles_finalstate", np.linspace(0, 20, 20)),
+    "nfatjets" : Histogram("nfatjets", "nfatjets", np.linspace(0, 10, 10))
+
 
 }
 

@@ -63,7 +63,9 @@ def channel_selection(channel, era, special=None, boosted_tau=False):
                 #  Add channel specific cuts to the list of cuts.
                 cuts.extend(
                     [
-                        ("fj_Xtm_particleNet_XtmVsQCD > 0.05", "tau_iso"),
+                        ("fj_Xtm_particleNet_XtmVsQCD > 0.75", "tau_iso"),
+                        ("eles_finalstate==0", "ele_veto"),
+                        ("muons_finalstate==1", "muon_veto"),
                   
                     ]
                 )
