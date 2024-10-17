@@ -89,13 +89,18 @@ common_bining_boost_htt = {
     "fj_Xte_particleNet_XteVsQCD" : Histogram("fj_Xte_particleNet_XteVsQCD", "fj_Xte_particleNet_XteVsQCD", np.linspace(0, 1, 20) ),
     "fj_Xtt_particleNet_XttVsQCD" : Histogram("fj_Xtt_particleNet_XttVsQCD", "fj_Xtt_particleNet_XttVsQCD", np.linspace(0, 1, 20)),
 
-    "fj_Xtm_msoftdrop" : Histogram("fj_Xtm_msoftdrop", "fj_Xtm_msoftdrop", np.arange(20, 250, 10)),
+    "fj_Xtm_msoftdrop" : Histogram("fj_Xtm_msoftdrop", "fj_Xtm_msoftdrop", np.arange(0, 250, 10)),
     "fj_Xtm_nsubjettiness_2over1": Histogram("fj_Xtm_nsubjettiness_2over1", "fj_Xtm_nsubjettiness_2over1", np.linspace(0, 1, 20)),
     "fj_Xtm_nsubjettiness_3over2": Histogram("fj_Xtm_nsubjettiness_3over2", "fj_Xtm_nsubjettiness_3over2", np.linspace(0, 1, 20)),
 
     "muons_finalstate" : Histogram("muons_finalstate", "muons_finalstate", np.linspace(0, 20, 20)),
     "eles_finalstate" : Histogram("eles_finalstate", "eles_finalstate", np.linspace(0, 20, 20)),
-    "nfatjets" : Histogram("nfatjets", "nfatjets", np.linspace(0, 10, 10))
+    "nfatjets" : Histogram("nfatjets", "nfatjets", np.linspace(0, 10, 10)),
+
+    "mu_tau_finalstate_deltaR" : Histogram("mu_tau_finalstate_deltaR", "mu_tau_finalstate_deltaR", np.linspace(0, 1, 20)),
+    "mu_tau_finalstate_mu_pt" : Histogram("mu_tau_finalstate_mu_pt", "mu_tau_finalstate_mu_pt", np.linspace(0, 1000, 20) ),
+    "mu_tau_finalstate_mu_eta" : Histogram("mu_tau_finalstate_mu_eta", "mu_tau_finalstate_mu_eta", np.linspace(-2.5, 2.5, 50)), 
+    "mu_tau_finalstate_mu_iso" : Histogram("mu_tau_finalstate_mu_iso", "mu_tau_finalstate_mu_iso", np.linspace(0, 1, 50)), 
 
 
 }

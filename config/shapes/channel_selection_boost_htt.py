@@ -65,7 +65,9 @@ def channel_selection(channel, era, special=None, boosted_tau=False):
                     [
                         ("fj_Xtm_particleNet_XtmVsQCD > 0.75", "tau_iso"),
                         ("eles_finalstate==0", "ele_veto"),
-                        ("muons_finalstate==1", "muon_veto"),
+                        ("mu_tau_finalstate==1", "mutau_state"),
+                        # ("muons_finalstate==1", "muon_veto"),
+                        ("fj_Xtm_msoftdrop>40", "msoftdrop"),
                   
                     ]
                 )
