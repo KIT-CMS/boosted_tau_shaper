@@ -99,7 +99,7 @@ def channel_selection(channel, era, special=None, boosted_tau=False):
                     # )
                     cuts.append(
                         (
-                            "fj_XtmVsQCD_pt>100",
+                            "fj_XtmVsQCD_pt>200 && (( trg_good_single_mu50 == 1 ) || ( trg_good_single_mu50_tk == 1 ) )",
                             "pt_selection",
                         ),  # TODO add nonHPS Triggerflag for also MC
                     )
