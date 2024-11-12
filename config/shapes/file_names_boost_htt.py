@@ -1,34 +1,34 @@
 # Input files used accross all channels in 2018.
 common_files_2018 = {
     "DY": [
-        "DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
+        "DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
 
     ],
     "DYNLO": [
-        "DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
+        "DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8",
     ],
     "TT": [
-        "TTToHadronic_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X",
+        "TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8",
+        "TTToHadronic_TuneCP5_13TeV-powheg-pythia8",
+        "TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8",
     ],
     "VV": [
 
-        "WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "ZZTo4L_TuneCP5_13TeV_powheg_pythia8RunIISummer20UL18NanoAODv12-106X",
-        "WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
+        "WZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8",
+        "ZZTo2Q2L_mllmin4p0_TuneCP5_13TeV-amcatnloFXFX-pythia8",
 
-        "ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X",
-        "ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8RunIISummer20UL18NanoAODv12-106X",
+        "ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8",
+        "ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8",
+        "ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8",
+        "ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8",
         
     ],
     # "ggH": [
@@ -230,20 +230,20 @@ files = {
         "mt": dict(
             {
                 "data": [
-                    "SingleMuonRun2018C-UL2018",
-                    "SingleMuonRun2018A-UL2018",
-                    "SingleMuonRun2018D-UL2018",
-                    "SingleMuonRun2018B-UL2018",
+                    "SingleMuon_Run2018A",
+                    "SingleMuon_Run2018B",
+                    "SingleMuon_Run2018C",
+                    "SingleMuon_Run2018D",
                 ],
                 "W": [
 
-                    "WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8RunIISummer20UL18NanoAODv12-106X",
+                    "WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8",
                    
                 ],
 
                 "W_NLO": [
 
-                    "WJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-pythia8RunIISummer20UL18NanoAODv12-106X",
+                    "WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8",
                    
                 ],
             },
