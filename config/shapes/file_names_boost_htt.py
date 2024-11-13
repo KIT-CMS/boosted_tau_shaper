@@ -31,6 +31,17 @@ common_files_2018 = {
         "ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8",
         
     ],
+    "QCDJETS": [
+        "QCD_Pt_170to300_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_300to470_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_470to600_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_600to800_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_1000to1400_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_1400to1800_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_1800to2400_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8",
+        "QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8",
+    ],
     # "ggH": [
     #     "GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL18NanoAODv12-106X",
         

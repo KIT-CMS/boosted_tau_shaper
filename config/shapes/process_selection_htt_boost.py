@@ -285,7 +285,11 @@ def W_process_selection(channel, era, boosted_tau):
     # W_process_weights.append(W_stitching_weight(era)) # TODO add W stitching weight in when npartons is available
     return Selection(name="W", weights=W_process_weights)
 
+def QCDJETS_process_selection(channel, era, boosted_tau):
+    QCDJETS_process_weights = MC_base_process_selection(channel, era, boosted_tau).weights
 
+    # W_process_weights.append(W_stitching_weight(era)) # TODO add W stitching weight in when npartons is available
+    return Selection(name="QCDJETS", weights=QCDJETS_process_weights)
 
 # """Built-on-top processes
 

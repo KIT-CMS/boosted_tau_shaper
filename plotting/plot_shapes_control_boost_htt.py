@@ -122,7 +122,7 @@ def main(info):
         "VVL", "TTL", "ZL", "jetFakesEMB", "EMB"
     ]
     if args.boost and not args.embedding and not args.fake_factor:
-        bkg_processes = ["ZTT", "TTT", "VVT", "W", ]
+        bkg_processes = ["ZTT", "TTT", "VVT", "W", "QCDJETS"]
     if not args.fake_factor and args.embedding:
         if args.nlo:
             bkg_processes = [
