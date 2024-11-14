@@ -102,7 +102,8 @@ common_bining_boost_htt = {
     "mu_tau_finalstate_mu_pt" : Histogram("mu_tau_finalstate_mu_pt", "mu_tau_finalstate_mu_pt", np.linspace(0, 1000, 20) ),
     "mu_tau_finalstate_mu_eta" : Histogram("mu_tau_finalstate_mu_eta", "mu_tau_finalstate_mu_eta", np.linspace(-2.5, 2.5, 50)), 
     "mu_tau_finalstate_mu_iso" : Histogram("mu_tau_finalstate_mu_iso", "mu_tau_finalstate_mu_iso", np.linspace(0, 1, 50)), 
-
+    
+    "met_fatjet_pt" : Histogram("met_fatjet_pt", "met_fatjet_pt", np.linspace(0, 1000, 20)),
 
 }
 
