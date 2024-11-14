@@ -287,6 +287,15 @@ def W_process_selection(channel, era, boosted_tau):
 
 def QCDJETS_process_selection(channel, era, boosted_tau):
     QCDJETS_process_weights = MC_base_process_selection(channel, era, boosted_tau).weights
+    QCDJETS_process_weights.extend(
+        [
+            ("numberGeneratedEventsWeight", "numberGeneratedEventsWeight"),
+            (
+                "(( 1.0 / negative_events_fraction) * (((genWeight<0) * -1) + ((genWeight > 0 * 1)))) * crossSectionPerEventWeight",
+                "crossSectionPerEventWeight",
+            ),
+        ]
+    )
 
     # W_process_weights.append(W_stitching_weight(era)) # TODO add W stitching weight in when npartons is available
     return Selection(name="QCDJETS", weights=QCDJETS_process_weights)
