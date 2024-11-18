@@ -6,7 +6,17 @@ NTUPLETAG=$3
 TAG=$4
 MODE=$5
 
-VARIABLES="fj_XtmVsQCD_pt,fj_Xtm_eta,fj_Xtm_phi,fj_Xtm_mass,fj_Xtm_particleNet_XtmVsQCD,fj_Xtm_msoftdrop,fj_Xte_particleNet_XteVsQCD,fj_Xtt_particleNet_XttVsQCD,fj_Xtm_nsubjettiness_2over1,fj_Xtm_nsubjettiness_3over2,muons_finalstate,eles_finalstate,mu_tau_finalstate_deltaR,mu_tau_finalstate_mu_pt,mu_tau_finalstate_mu_eta,mu_tau_finalstate_mu_iso,fj_Xtm_met_deltaPhi,met_fatjet_pt,fj_Xtm_m_inv_ditau"
+# VARIABLES="fj_XtmVsQCD_pt,fj_Xtm_eta,fj_Xtm_phi,fj_Xtm_mass,fj_Xtm_particleNet_XtmVsQCD,fj_Xtm_msoftdrop,fj_Xte_particleNet_XteVsQCD,fj_Xtt_particleNet_XttVsQCD,fj_Xtm_nsubjettiness_2over1,fj_Xtm_nsubjettiness_3over2"
+VAR_KINEM="fj_XtmVsQCD_pt,fj_Xtm_eta,fj_Xtm_phi,fj_Xtm_mass,fj_Xtm_msoftdrop"
+VAR_DISCR="fj_Xtm_particleNet_XtmVsQCD,fj_Xte_particleNet_XteVsQCD,fj_Xtt_particleNet_XttVsQCD"
+VAR_SUBJET="fj_Xtm_nsubjettiness_2over1,fj_Xtm_nsubjettiness_3over2"
+VAR_FINALSTATE="muons_finalstate,eles_finalstate"
+VAR_MU_TAU="mu_tau_finalstate_deltaR,mu_tau_finalstate_mu_pt,mu_tau_finalstate_mu_eta,mu_tau_finalstate_mu_iso"
+VAR_MET="fj_Xtm_met_deltaPhi,met_fatjet_pt"
+VAR_COLL_APPROX="fj_Xtm_m_inv_ditau"
+
+VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET},${VAR_COLL_APPROX}"
+
 ulimit -s unlimited
 source utils/setup_root.sh
 source utils/setup_ul_samples.sh $NTUPLETAG $ERA
