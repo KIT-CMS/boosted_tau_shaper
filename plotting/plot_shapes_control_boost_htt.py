@@ -80,7 +80,7 @@ def parse_arguments():
         action="store_true",
         help="Plot boosted H->tau tau without genmatching")
     parser.add_argument(
-        "--softdrop",
+        "--scaleZTT",
         action="store_true",
         help="A jet softdrop mass is added for comparison")
 
@@ -316,15 +316,14 @@ def main(info):
     else:
         plot.subplot(1).setGraphStyle("data_obs", "e0")
 
-    if args.softdrop:
-        softdrop_scale = 0
-        file = ROOT.TFile(args.input, "READ")
-        softdrop_hist = file.Get("DY#mt-DY#Nominal#fj_Xtm_msoftdrop").Clone()
-        if softdrop_hist.Integral() > 0:
-            softdrop_scale = 1
-        softdrop_hist.Scale(softdrop_scale)
-        plot.add_hist(softdrop_hist, "softdrop", "softdrop")
-        plot.subplot(0).setGraphStyle("softdrop", "hist", linecolor=styles.color_dict["ggH_hww"], linewidth=2)
+    if args.scaleZTT:
+        scaledZTT_scale = 0
+        scaledZTT_hist = rootfile.get_boost_file(channel, "ZTT", category=cat, shape_type=stype).Clone()
+        if scaledZTT_hist.Integral() > 0:
+            scaledZTT_scale = 1
+        scaledZTT_hist.Scale(scaledZTT_scale)
+        plot.add_hist(scaledZTT_hist, "scaledZTT", "scaledZTT")
+        plot.subplot(0).setGraphStyle("scaledZTT", "hist", linecolor=styles.color_dict["ggH_hww"], linewidth=2)
 
             
 
@@ -492,8 +491,8 @@ def main(info):
         procs_to_draw = ["stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
     else:
         procs_to_draw = ["stack", "total_bkg", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
-        if args.softdrop:
-            procs_to_draw = ["stack", "total_bkg", "softdrop", "data_obs"] if args.linear else ["stack", "total_bkg", "softdrop", "data_obs"]
+        if args.scaleZTT:
+            procs_to_draw = ["stack", "total_bkg", "scaledZTT", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledZTT", "data_obs"]
     if args.draw_jet_fake_variation is not None:
         procs_to_draw = ["stack", "total_bkg", "data_obs"]
     plot.subplot(0).Draw(procs_to_draw)
@@ -557,8 +556,8 @@ def main(info):
             # # plot.legend(i).add_entry(0 if args.linear else 1, "HWW%s" % suffix[i], "%s #times H#rightarrowWW"%str(int(HWW_scale)), 'l')
         plot.legend(i).add_entry(0, "data_obs", "Observed", 'PE2L')
         plot.legend(i).setNColumns(3)
-        if args.softdrop:
-            plot.legend(i).add_entry(0, "softdrop", "Z#rightarrow#tau#tau softdrop mass", 'l')
+        if args.scaleZTT:
+            plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau", 'l')
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
     plot.legend(1).Draw()
@@ -659,6 +658,6 @@ if __name__ == "__main__":
             os.mkdir("%s_plots_%s/%s"%(args.era,postfix,ch))
         for v in variables:
             infolist.append({"args" : args, "channel" : ch, "variable" : v})
-    # main(infolist[0])
-    pool = Pool(1)
-    pool.map(main, infolist)
+    main(infolist[0])
+    # pool = Pool(1)
+    # pool.map(main, infolist)
