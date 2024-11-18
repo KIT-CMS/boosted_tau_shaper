@@ -319,8 +319,9 @@ def main(info):
     if args.scaleZTT:
         scaledZTT_scale = 0
         scaledZTT_hist = rootfile.get_boost_file(channel, "ZTT", category=cat, shape_type=stype).Clone()
+        data_hist = rootfile.get(channel, "data", category=cat, shape_type=stype).Clone()
         if scaledZTT_hist.Integral() > 0:
-            scaledZTT_scale = 1
+            scaledZTT_scale = data_hist.Integral() / scaledZTT_hist.Integral() * 0.5
         scaledZTT_hist.Scale(scaledZTT_scale)
         plot.add_hist(scaledZTT_hist, "scaledZTT", "scaledZTT")
         plot.subplot(0).setGraphStyle("scaledZTT", "hist", linecolor=styles.color_dict["ggH_hww"], linewidth=2)
@@ -557,7 +558,7 @@ def main(info):
         plot.legend(i).add_entry(0, "data_obs", "Observed", 'PE2L')
         plot.legend(i).setNColumns(3)
         if args.scaleZTT:
-            plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau", 'l')
+            plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau #times 0.5 data", 'l')
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
     plot.legend(1).Draw()
@@ -658,6 +659,6 @@ if __name__ == "__main__":
             os.mkdir("%s_plots_%s/%s"%(args.era,postfix,ch))
         for v in variables:
             infolist.append({"args" : args, "channel" : ch, "variable" : v})
-    main(infolist[0])
-    # pool = Pool(1)
-    # pool.map(main, infolist)
+    # main(infolist[0])
+    pool = Pool(1)
+    pool.map(main, infolist)
