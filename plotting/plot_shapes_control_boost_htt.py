@@ -79,6 +79,10 @@ def parse_arguments():
         "--boost",
         action="store_true",
         help="Plot boosted H->tau tau without genmatching")
+    parser.add_argument(
+        "--softdrop",
+        action="store_true",
+        help="A jet softdrop mass is added for comparison")
 
     return parser.parse_args()
 
@@ -312,6 +316,18 @@ def main(info):
     else:
         plot.subplot(1).setGraphStyle("data_obs", "e0")
 
+    if args.softdrop:
+        softdrop_scale = 0
+        file = ROOT.TFile(args.input, "READ")
+        softdrop_hist = file.Get("DY#mt-DY#Nominal#fj_Xtm_msoftdrop").Clone()
+        if softdrop_hist.Integral() > 0:
+            softdrop_scale = 1
+        softdrop_hist.Scale(softdrop_scale)
+        plot.add_hist(softdrop_hist, "softdrop", "softdrop")
+        plot.subplot(0).setGraphStyle("softdrop", "hist", linecolor=styles.color_dict["ggH_hww"], linewidth=2)
+
+            
+
     # get signal histograms
     plot_idx_to_add_signal = [0,2] if args.linear else [1,2]
     if args.add_signals:
@@ -476,6 +492,8 @@ def main(info):
         procs_to_draw = ["stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
     else:
         procs_to_draw = ["stack", "total_bkg", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
+        if args.softdrop:
+            procs_to_draw = ["stack", "total_bkg", "softdrop", "data_obs"] if args.linear else ["stack", "total_bkg", "softdrop", "data_obs"]
     if args.draw_jet_fake_variation is not None:
         procs_to_draw = ["stack", "total_bkg", "data_obs"]
     plot.subplot(0).Draw(procs_to_draw)
@@ -539,6 +557,8 @@ def main(info):
             # # plot.legend(i).add_entry(0 if args.linear else 1, "HWW%s" % suffix[i], "%s #times H#rightarrowWW"%str(int(HWW_scale)), 'l')
         plot.legend(i).add_entry(0, "data_obs", "Observed", 'PE2L')
         plot.legend(i).setNColumns(3)
+        if args.softdrop:
+            plot.legend(i).add_entry(0, "softdrop", "Z#rightarrow#tau#tau softdrop mass", 'l')
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
     plot.legend(1).Draw()
