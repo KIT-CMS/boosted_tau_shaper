@@ -324,7 +324,7 @@ def main(info):
             scaledZTT_scale = data_hist.Integral() / scaledZTT_hist.Integral() * 0.5
         scaledZTT_hist.Scale(scaledZTT_scale)
         plot.add_hist(scaledZTT_hist, "scaledZTT", "scaledZTT")
-        plot.subplot(0).setGraphStyle("scaledZTT", "hist", linecolor=styles.color_dict["ggH_hww"], linewidth=2)
+        plot.subplot(0).setGraphStyle("scaledZTT", "hist", linecolor=styles.color_dict["ggH"], linewidth=2)
 
             
 
