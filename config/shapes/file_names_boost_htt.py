@@ -42,7 +42,7 @@ common_files_2018 = {
         "QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8",
         "QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8",
     ],
-    "ggH": [
+    "GGH": [
         "GluGluHToTauTau_Pt-200ToInf_M-125_TuneCP5_MINLO_13TeV-powheg-pythia8",
         
     ],

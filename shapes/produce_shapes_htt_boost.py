@@ -641,7 +641,7 @@ def get_control_units_no_genmatch(
     add_control_process(
         control_units,
         name="ggh",
-        dataset=datasets["ggH"],
+        dataset=datasets["GGH"],
         selections=[
             channel_selection(channel, era, special_analysis, boosted_tau),
             GGH_process_selection(channel, era, boosted_tau),

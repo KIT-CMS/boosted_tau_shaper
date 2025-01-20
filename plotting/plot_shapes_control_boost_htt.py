@@ -83,6 +83,10 @@ def parse_arguments():
         "--scaleZTT",
         action="store_true",
         help="A jet softdrop mass is added for comparison")
+    parser.add_argument(
+        "--blind-data",
+        action="store_true",
+        help="A jet softdrop mass is added for comparison")
 
     return parser.parse_args()
 
@@ -126,7 +130,7 @@ def main(info):
         "VVL", "TTL", "ZL", "jetFakesEMB", "EMB"
     ]
     if args.boost and not args.embedding and not args.fake_factor:
-        bkg_processes = ["ZTT", "TTT", "VVT", "W", "QCDJETS"]
+        bkg_processes = ["ZTT", "TTT", "VVT", "W", "QCDJETS", "GGH"]
     if not args.fake_factor and args.embedding:
         if args.nlo:
             bkg_processes = [
@@ -305,16 +309,18 @@ def main(info):
         markersize=0,
         fillcolor=styles.color_dict["unc"],
         linecolor=0)
+    
+    if not args.blind_data:
 
-    plot.add_hist(rootfile.get(channel, "data", category=cat, shape_type=stype), "data_obs")
-    data_norm = plot.subplot(0).get_hist("data_obs").Integral()
-    plot.subplot(0).get_hist("data_obs").GetXaxis().SetMaxDigits(4)
-    plot.subplot(0).setGraphStyle("data_obs", "e0")
-    plot.subplot(0).setGraphStyle("data_obs", "e0")
-    if args.linear:
-        pass
-    else:
-        plot.subplot(1).setGraphStyle("data_obs", "e0")
+        plot.add_hist(rootfile.get(channel, "data", category=cat, shape_type=stype), "data_obs")
+        data_norm = plot.subplot(0).get_hist("data_obs").Integral()
+        plot.subplot(0).get_hist("data_obs").GetXaxis().SetMaxDigits(4)
+        plot.subplot(0).setGraphStyle("data_obs", "e0")
+        plot.subplot(0).setGraphStyle("data_obs", "e0")
+        if args.linear:
+            pass
+        else:
+            plot.subplot(1).setGraphStyle("data_obs", "e0")
 
     if args.scaleZTT:
         scaledZTT_scale = 0
@@ -418,11 +424,16 @@ def main(info):
         to_draw = [
             "total_bkg", "bkg_ggH", "bkg_ggH_top", "bkg_qqH",
             "bkg_qqH_top", "data_obs"
-        ]
+        ] 
     else:
-        to_draw = [
-            "total_bkg", "data_obs"
-        ]
+        if args.blind_data:
+            to_draw = [
+                "total_bkg",
+            ]
+        if not args.blind_data:
+            to_draw = [
+                "total_bkg", "data_obs"
+            ]
     plot.subplot(2).normalize(to_draw, "total_bkg")
 
     # stack background processes
@@ -491,9 +502,16 @@ def main(info):
     if args.add_signals:
         procs_to_draw = ["stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
     else:
-        procs_to_draw = ["stack", "total_bkg", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
-        if args.scaleZTT:
-            procs_to_draw = ["stack", "total_bkg", "scaledZTT", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledZTT", "data_obs"]
+        if not args.blind_data:
+            procs_to_draw = ["stack", "total_bkg", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
+            if args.scaleZTT:
+                procs_to_draw = ["stack", "total_bkg", "scaledZTT", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledZTT", "data_obs"]
+        
+        if args.blind_data:
+            procs_to_draw = ["stack", "total_bkg"] if args.linear else ["stack", "total_bkg"]
+            if args.scaleZTT:
+                procs_to_draw = ["stack", "total_bkg", "scaledZTT"] if args.linear else ["stack", "total_bkg", "scaledZTT"]
+    
     if args.draw_jet_fake_variation is not None:
         procs_to_draw = ["stack", "total_bkg", "data_obs"]
     plot.subplot(0).Draw(procs_to_draw)
@@ -555,7 +573,8 @@ def main(info):
             # plot.legend(i).add_entry(0 if args.linear else 1, "VH%s" % suffix[i], "%s #times V(lep)H"%str(int(VH_scale)), 'l')
             # plot.legend(i).add_entry(0 if args.linear else 1, "ttH%s" % suffix[i], "%s #times ttH"%str(int(ttH_scale)), 'l')
             # # plot.legend(i).add_entry(0 if args.linear else 1, "HWW%s" % suffix[i], "%s #times H#rightarrowWW"%str(int(HWW_scale)), 'l')
-        plot.legend(i).add_entry(0, "data_obs", "Observed", 'PE2L')
+        if not args.blind_data:
+            plot.legend(i).add_entry(0, "data_obs", "Observed", 'PE2L')
         plot.legend(i).setNColumns(3)
         if args.scaleZTT:
             plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau #times 0.5 data", 'l')
@@ -566,7 +585,8 @@ def main(info):
     for i in range(2):
         plot.add_legend(
             reference_subplot=2, pos=1, width=0.6, height=0.03)
-        plot.legend(i + 2).add_entry(0, "data_obs", "Observed", 'PE2L')
+        if not args.blind_data:
+            plot.legend(i + 2).add_entry(0, "data_obs", "Observed", 'PE2L')
         if "mm" not in channel and "ee" not in channel and args.draw_jet_fake_variation is None and args.add_signals:
             plot.legend(i + 2).add_entry(0 if args.linear else 1, "ggH%s" % suffix[i],
                                          "ggH+bkg.", 'l')
