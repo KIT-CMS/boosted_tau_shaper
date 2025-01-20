@@ -15,7 +15,7 @@ VAR_MU_TAU="mu_tau_finalstate_deltaR,mu_tau_finalstate_mu_pt,mu_tau_finalstate_m
 VAR_MET="fj_Xtm_met_deltaPhi,met_fatjet_pt"
 VAR_COLL_APPROX="fj_Xtm_m_inv_ditau"
 
-VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET},${VAR_COLL_APPROX}"
+VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET}"
 
 ulimit -s unlimited
 source utils/setup_root.sh
@@ -77,7 +77,7 @@ if [[ $MODE == "PLOT" ]]; then
 
     # python3 plotting/plot_shapes_control.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --embedding --fake-factor
     # python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --embedding
-    python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL}  --boost
+    python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL}  --boost --scaleZTT
     # python3 plotting/plot_shapes_control.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --fake-factor
 
     # python2 ~/tools/webgallery/gallery.py Run${ERA}_plots_emb_classic/
