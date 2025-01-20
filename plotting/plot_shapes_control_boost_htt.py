@@ -87,6 +87,10 @@ def parse_arguments():
         "--blind-data",
         action="store_true",
         help="A jet softdrop mass is added for comparison")
+    parser.add_argument(
+        "--scaleGGH",
+        action="store_true",
+        help="Scale ggH process")
 
     return parser.parse_args()
 
@@ -332,6 +336,16 @@ def main(info):
         plot.add_hist(scaledZTT_hist, "scaledZTT", "scaledZTT")
         plot.subplot(0).setGraphStyle("scaledZTT", "hist", linecolor=styles.color_dict["ggH"], linewidth=2)
 
+    if args.scaleGGH:
+        scaledGGH_scale = 0
+        scaledGGH_hist = rootfile.get_boost_file(channel, "GGH", category=cat, shape_type=stype).Clone()
+        w_hist = rootfile.get(channel, "W", category=cat, shape_type=stype).Clone()
+        if scaledGGH_hist.Integral() > 0:
+            scaledGGH_scale = w_hist.Integral() / scaledGGH_hist.Integral() * 0.75
+        scaledGGH_hist.Scale(scaledGGH_scale)
+        plot.add_hist(scaledGGH_hist, "scaledGGH", "scaledGGH")
+        plot.subplot(0).setGraphStyle("scaledGGH", "hist", linecolor=styles.color_dict["ggH"], linewidth=2)
+
             
 
     # get signal histograms
@@ -514,11 +528,15 @@ def main(info):
             procs_to_draw = ["stack", "total_bkg", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
             if args.scaleZTT:
                 procs_to_draw = ["stack", "total_bkg", "scaledZTT", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledZTT", "data_obs"]
+            if args.scaleGGH:
+                procs_to_draw = ["stack", "total_bkg", "scaledGGH", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledGGH", "data_obs"]
         
         if args.blind_data:
             procs_to_draw = ["stack", "total_bkg"] if args.linear else ["stack", "total_bkg"]
             if args.scaleZTT:
                 procs_to_draw = ["stack", "total_bkg", "scaledZTT"] if args.linear else ["stack", "total_bkg", "scaledZTT"]
+            if args.scaleGGH:
+                procs_to_draw = ["stack", "total_bkg", "scaledGGH"] if args.linear else ["stack", "total_bkg", "scaledGGH"]
     
     if args.draw_jet_fake_variation is not None:
         procs_to_draw = ["stack", "total_bkg", "data_obs"]
@@ -586,6 +604,8 @@ def main(info):
         plot.legend(i).setNColumns(3)
         if args.scaleZTT:
             plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau #times 0.5 data", 'l')
+        if args.scaleGGH:
+            plot.legend(i).add_entry(0, "scaledGGH", "gg#rightarrowH #times 0.75 W bgr", 'l')
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
     plot.legend(1).Draw()
