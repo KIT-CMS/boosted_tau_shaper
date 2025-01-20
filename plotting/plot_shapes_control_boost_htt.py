@@ -445,10 +445,18 @@ def main(info):
         plot.subplot(1).normalizeByBinWidth()
 
     # set axes limits and labels
-    plot.subplot(0).setYlims(
-        split_dict[channel],
-        max(1.6 * plot.subplot(0).get_hist("data_obs").GetMaximum(),
-            split_dict[channel] * 2))
+
+    if not args.blind_data: 
+        plot.subplot(0).setYlims(
+            split_dict[channel],
+            max(1.6 * plot.subplot(0).get_hist("data_obs").GetMaximum(),
+                split_dict[channel] * 2))
+        
+    if args.blind_data: 
+        plot.subplot(0).setYlims(
+            split_dict[channel],
+            max(2.6 * plot.subplot(0).get_hist("W").GetMaximum(),
+                split_dict[channel] * 2))
 
     log_quantities = ["ME_ggh", "ME_vbf", "ME_z2j_1", "ME_z2j_2", "ME_q2v1", "ME_q2v2", "ME_vbf_vs_ggh", "ME_ggh_vs_Z"]
     if variable in log_quantities:
