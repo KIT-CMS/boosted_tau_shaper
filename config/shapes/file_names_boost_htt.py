@@ -42,10 +42,10 @@ common_files_2018 = {
         "QCD_Pt_2400to3200_TuneCP5_13TeV_pythia8",
         "QCD_Pt_3200toInf_TuneCP5_13TeV_pythia8",
     ],
-    # "ggH": [
-    #     "GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL18NanoAODv12-106X",
+    "ggH": [
+        "GluGluHToTauTau_Pt-200ToInf_M-125_TuneCP5_MINLO_13TeV-powheg-pythia8",
         
-    # ],
+    ],
     # "qqH": [
     #     "VBFHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8_RunIISummer20UL18NanoAODv12-106X",
     #     # "VBFHToTauTauHTXSFilterSTXS1p1Bin203to205M125_RunIIAutumn18MiniAOD_102X_13TeV_MINIAOD_powheg-pythia8_v1",

@@ -35,7 +35,8 @@ from config.shapes.process_selection_htt_boost import (
     TT_process_selection,
     VV_process_selection,
     W_process_selection,
-    QCDJETS_process_selection
+    QCDJETS_process_selection,
+    GGH_process_selection
     # ZTT_process_selection,
     # ZL_process_selection,
     # ZJ_process_selection,
@@ -637,6 +638,18 @@ def get_control_units_no_genmatch(
         binning=control_binning,
         variables=variable_set,
     )
+    add_control_process(
+        control_units,
+        name="ggh",
+        dataset=datasets["ggH"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            GGH_process_selection(channel, era, boosted_tau),
+        ],
+        channel=channel,
+        binning=control_binning,
+        variables=variable_set,
+    )
 
     return control_units
 
@@ -751,7 +764,7 @@ def main(args):
             "vvj",
             "w",
             "w_nlo",
-            # "ggh",
+            "ggh",
             # "qqh",
             # "zh",
             # "wh",
