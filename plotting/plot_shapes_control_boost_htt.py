@@ -134,7 +134,7 @@ def main(info):
         "VVL", "TTL", "ZL", "jetFakesEMB", "EMB"
     ]
     if args.boost and not args.embedding and not args.fake_factor:
-        bkg_processes = ["ZTT", "TTT", "VVT", "W", "QCDJETS", "GGH"]
+        bkg_processes = ["ZTT", "TTT", "VVT", "W", "QCDJETS"]
     if not args.fake_factor and args.embedding:
         if args.nlo:
             bkg_processes = [
@@ -341,7 +341,7 @@ def main(info):
         scaledGGH_hist = rootfile.get_boost_file(channel, "GGH", category=cat, shape_type=stype).Clone()
         w_hist = rootfile.get(channel, "W", category=cat, shape_type=stype).Clone()
         if scaledGGH_hist.Integral() > 0:
-            scaledGGH_scale = w_hist.Integral() / scaledGGH_hist.Integral() * 0.75
+            scaledGGH_scale = 250
         scaledGGH_hist.Scale(scaledGGH_scale)
         plot.add_hist(scaledGGH_hist, "scaledGGH", "scaledGGH")
         plot.subplot(0).setGraphStyle("scaledGGH", "hist", linecolor=styles.color_dict["ggH"], linewidth=2)
@@ -605,7 +605,7 @@ def main(info):
         if args.scaleZTT:
             plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau #times 0.5 data", 'l')
         if args.scaleGGH:
-            plot.legend(i).add_entry(0, "scaledGGH", "gg#rightarrowH #times 0.75 W bgr", 'l')
+            plot.legend(i).add_entry(0, "scaledGGH", "gg#rightarrowH #times "+str(scaledGGH_scale), 'l')
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
     plot.legend(1).Draw()
