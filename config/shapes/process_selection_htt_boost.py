@@ -97,6 +97,8 @@ def MC_base_process_selection(channel, era, boosted_tau=False):
                 trgweight = None
             elif era == "2017":
                 trgweight = ("((pt_1>28)* trg_wgt_single_mu27)", "trgweight")
+            elif era == "2018":
+                trgweight = ("((fj_XtmVsQCD_pt>200)* trg_wgt_single_mu50_boosted )", "trgweight")
             else:
                 trgweight = None
     elif channel == "tt":
