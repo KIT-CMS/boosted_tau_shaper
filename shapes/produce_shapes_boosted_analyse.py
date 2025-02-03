@@ -351,7 +351,7 @@ def get_analysis_units(
     channel, era, datasets, categorization, special_analysis, nn_shapes=False, boosted_tau = False,
 ):
     analysis_units = {}
-    # import pdb; pdb.set_trace()
+    
     add_process(
         analysis_units,
         name="data",
@@ -359,6 +359,58 @@ def get_analysis_units(
         selections=[
             channel_selection(channel, era, special_analysis, boosted_tau),
             # Data_base_process_selection(era, channel),
+        ],
+        categorization=categorization,
+        channel=channel,
+    )
+
+    add_process(
+        analysis_units,
+        name="ztt",
+        dataset=datasets["DY"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            DY_process_selection(channel, era, boosted_tau),
+            
+        ],
+        categorization=categorization,
+        channel=channel,
+    )
+
+    add_process(
+        analysis_units,
+        name="ztt_nlo",
+        dataset=datasets["DYNLO"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            DY_NLO_process_selection(channel, era, boosted_tau),
+            
+        ],
+        categorization=categorization,
+        channel=channel,
+    )
+
+    add_process(
+        analysis_units,
+        name="ttt",
+        dataset=datasets["TT"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            TT_process_selection(channel, era, boosted_tau),
+            
+        ],
+        categorization=categorization,
+        channel=channel,
+    )
+
+    add_process(
+        analysis_units,
+        name="vvt",
+        dataset=datasets["VV"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            VV_process_selection(channel, era, boosted_tau),
+            
         ],
         categorization=categorization,
         channel=channel,
@@ -375,6 +427,33 @@ def get_analysis_units(
         categorization=categorization,
         channel=channel,
     )
+
+    add_process(
+        analysis_units,
+        name="qcdjets",
+        dataset=datasets["QCDJETS"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            QCDJETS_process_selection(channel, era, boosted_tau),
+            
+        ],
+        categorization=categorization,
+        channel=channel,
+    )
+
+    add_process(
+        analysis_units,
+        name="ggh",
+        dataset=datasets["GGH"],
+        selections=[
+            channel_selection(channel, era, special_analysis, boosted_tau),
+            GGH_process_selection(channel, era, boosted_tau),
+            
+        ],
+        categorization=categorization,
+        channel=channel,
+    )
+
     return analysis_units
 
 
@@ -434,7 +513,8 @@ def main(args):
         )
 
     # boosted_proc = {"data", "ztt", "ztt_nlo", "ttt", "vvt", "w", "w_nlo", "qcdjets"}
-    boosted_proc = {"data",  "w"}
+    boosted_proc = {"data",  "w", "ztt", "ztt_nlo", "ttt", "vvt","qcdjets"}
+    # boosted_proc_mc = {"w", "ztt", "ztt_nlo", "ttt", "vvt","qcdjets"}
 
     if channel in ["mt"] and args.boosted_tau_analysis == True:
         book_histograms(
@@ -448,295 +528,33 @@ def main(args):
         ##################################
         # SYSTEMATICS
         ############################
-        if args.skip_systematic_variations:
-            pass
+        # if args.skip_systematic_variations:
+        #     pass
         # else:
-        #     # Book variations common to all channels.
-        #     # um.book([unit for d in {"ggh"} & procS for unit in nominals[era]['units'][channel][d]], [*ggh_acceptance], enable_check=args.enable_booking_check)
-        #     # um.book([unit for d in {"qqh"} & procS for unit in nominals[era]['units'][channel][d]], [*qqh_acceptance], enable_check=args.enable_booking_check)
-        #     # TODO add signal uncertainties
-        #     book_histograms(
-        #         um,
-        #         processes={"ggh"} & procS,
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[ggh_acceptance],
-        #         enable_check=do_check,
-        #     )
-        #     book_histograms(
-        #         um,
-        #         processes={"qqh"} & procS,
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[qqh_acceptance],
-        #         enable_check=do_check,
-        #     )
-        #     book_histograms(
-        #         um,
-        #         processes=simulatedProcsDS[channel],
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[jet_es],
-        #         enable_check=do_check,
-        #     )
-        #     # TODO add btag stuff
-        #     # book_histograms(
-        #     #     um,
-        #     #     processes=simulatedProcsDS[channel],
-        #     #     datasets=nominals[era]["units"][channel],
-        #     #     variations=[mistag_eff, btag_eff],
-        #     #     enable_check=do_check,
-        #     # )
-        #     book_histograms(
-        #         um,
-        #         processes={"ztt", "zj", "zl", "w"} & procS | signalsS,
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[recoil_resolution, recoil_response],
-        #         enable_check=do_check,
-        #     )
-        #     book_histograms(
-        #         um,
-        #         processes=simulatedProcsDS[channel],
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[met_unclustered, pileup_reweighting],
-        #         enable_check=do_check,
-        #     )
 
-        #     book_histograms(
-        #         um,
-        #         processes={"ztt", "zl", "zj"} & procS,
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[zpt],
-        #         enable_check=do_check,
-        #     )
-        #     book_histograms(
-        #         um,
-        #         processes={"ttt", "ttl", "ttj"} & procS,
-        #         datasets=nominals[era]["units"][channel],
-        #         variations=[top_pt],
-        #         enable_check=do_check,
-        #     )
-        #     # Book variations common to multiple channels.
-        #     if channel in ["et", "mt", "tt"]:
-        #         book_histograms(
-        #             um,
-        #             processes=(trueTauBkgS | leptonFakesS | signalsS) - {"zl"},
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 tau_es_3prong,
-        #                 tau_es_3prong1pizero,
-        #                 tau_es_1prong,
-        #                 tau_es_1prong1pizero,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=jetFakesDS[channel],
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 jet_to_tau_fake,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 emb_tau_es_3prong,
-        #                 emb_tau_es_3prong1pizero,
-        #                 emb_tau_es_1prong,
-        #                 emb_tau_es_1prong1pizero,
-        #                 tau_es_3prong,
-        #                 tau_es_3prong1pizero,
-        #                 tau_es_1prong,
-        #                 tau_es_1prong1pizero,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #     if channel in ["et", "mt"]:
-        #         book_histograms(
-        #             um,
-        #             processes=(trueTauBkgS | leptonFakesS | signalsS) - {"zl"},
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 tau_id_eff_lt,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=dataS | embS | leptonFakesS | trueTauBkgS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 ff_variations_lt,
-        #             ],
-        #             enable_check=do_check,
-        #         )
+        book_histograms(
+            um,
+            processes=boosted_proc- {"data"},
+            datasets=nominals[era]["units"][channel],
+            variations=[jet_es],
+            enable_check=do_check,
+        )
 
-        #         book_histograms(
-        #             um,
-        #             processes=leptonFakesS | trueTauBkgS | embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 ff_variations_tau_es_lt,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 ff_variations_tau_es_emb_lt,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[
-        #                 emb_tau_id_eff_lt,
-        #                 emb_tau_id_eff_lt_corr,
-        #             ],
-        #             enable_check=do_check,
-        #         )
-        #     if channel in ["et", "em"]:
-        #         # TODO add eleES
-        #         # book_histograms(
-        #         #     um,
-        #         #     processes=simulatedProcsDS[channel],
-        #         #     datasets=nominals[era]["units"][channel],
-        #         #     variations=[
-        #         #         ele_res,
-        #         #         ele_es
-        #         #     ],
-        #         #     enable_check=do_check,
-        #         # )
-        #         # TODO add emb ele ES
-        #         book_histograms(
-        #             um,
-        #             processes=embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[emb_e_es],
-        #             enable_check=do_check,
-        #         )
-        #     # Book channel independent variables.
-        #     if channel == "mt":
-        #         book_histograms(
-        #             um,
-        #             processes={"zl"} & procS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[mu_fake_es_inc],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=simulatedProcsDS[channel],
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[trigger_eff_mt],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[trigger_eff_mt_emb],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes={"zl"} & procS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[zll_mt_fake_rate],
-        #             enable_check=do_check,
-        #         )
-        #     if channel == "et":
-        #         book_histograms(
-        #             um,
-        #             processes={"zl"} & procS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[ele_fake_es],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=simulatedProcsDS[channel],
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[trigger_eff_et],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes=embS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[trigger_eff_et_emb],
-        #             enable_check=do_check,
-        #         )
-        #         book_histograms(
-        #             um,
-        #             processes={"zl"} & procS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[zll_et_fake_rate],
-        #             enable_check=do_check,
-        #         )
-        #     if channel == "tt":
-        #         book_histograms(
-        #             um,
-        #             processes=trueTauBkgS | leptonFakesS | signalsS,
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[tau_id_eff_tt],
-        #             enable_check=do_check,
-        #         )
-        #         # Todo add trigger efficiency
-        #         # book_histograms(
-        #         #     um,
-        #         #     processes=simulatedProcsDS[channel],
-        #         #     datasets=nominals[era]["units"][channel],
-        #         #     variations=[tau_trigger_eff_tt],
-        #         #     enable_check=do_check,
-        #         # )
-        #         # TODO add trigger efficiency for emb
-        #         # book_histograms(
-        #         #     um,
-        #         #     processes=embS,
-        #         #     datasets=nominals[era]["units"][channel],
-        #         #     variations=[emb_tau_id_eff_tt, tau_id_eff_tt, tau_trigger_eff_tt_emb, tau_trigger_eff_tt, emb_decay_mode_eff_tt],
-        #         #     enable_check=do_check,
-        #         # )
-        #         # TODO add fake factor variations
-        #         # book_histograms(
-        #         #     um,
-        #         #     processes=dataS | embS | trueTauBkgS,
-        #         #     datasets=nominals[era]["units"][channel],
-        #         #     variations=[ff_variations_tt],
-        #         #     enable_check=do_check,
-        #         # )
-        #         # TODO add fake factor variations for lepton fakes
-        #         # book_histograms(
-        #         #     um,
-        #         #     processes=leptonFakesS,
-        #         #     datasets=nominals[era]["units"][channel],
-        #         #     variations=[ff_variations_tt_mcl],
-        #         #     enable_check=do_check,
-        #         # )
-        #     # if channel == "em":
-        #     # TODO add QCD variations ?
-        #     # book_histograms(
-        #     #     um,
-        #     #     processes=dataS | embS | simulatedProcsDS[channel] - signalsS,
-        #     #     datasets=nominals[era]["units"][channel],
-        #     #     variations=[qcd_variations_em],
-        #     #     enable_check=do_check,
-        #     # )
-        #     # Book era dependent uncertainty shapes
-        #     if "2016" in era or "2017" in era:
-        #         book_histograms(
-        #             um,
-        #             processes=simulatedProcsDS[channel],
-        #             datasets=nominals[era]["units"][channel],
-        #             variations=[prefiring],
-        #             enable_check=do_check,
-        #         )
+        book_histograms(
+            um,
+            processes=boosted_proc- {"data"},
+            datasets=nominals[era]["units"][channel],
+            variations=[met_unclustered, pileup_reweighting],
+            enable_check=do_check,
+        )
+
+        book_histograms(
+            um,
+            processes=boosted_proc- {"data"},
+            datasets=nominals[era]["units"][channel],
+            variations=[recoil_resolution, recoil_response],
+            enable_check=do_check,
+        )
 
     # Step 2: convert units to graphs and merge them
     g_manager = GraphManager(um.booked_units, True)
@@ -748,11 +566,11 @@ def main(args):
     if args.only_create_graphs:
         if args.control_plots or args.gof_inputs:
             graph_file_name = "control_unit_graphs-{}-{}-{}.pkl".format(
-                era, ",".join(args.channels), ",".join(sorted(procS))
+                era, ",".join(args.channels), ",".join(sorted(boosted_proc))
             )
         else:
             graph_file_name = "analysis_unit_graphs-{}-{}-{}.pkl".format(
-                era, ",".join(args.channels), ",".join(sorted(procS))
+                era, ",".join(args.channels), ",".join(sorted(boosted_proc))
             )
         if args.graph_dir is not None:
             graph_file = os.path.join(args.graph_dir, graph_file_name)
