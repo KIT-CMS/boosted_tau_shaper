@@ -30,6 +30,18 @@ if [ ! -d "$shapes_output" ]; then
     mkdir -p $shapes_output
 fi
 
+
+if [[ $MODE == "XSEC" ]]; then
+
+echo "##############################################################################################"
+echo "#      Checking xsec friends directory                                                       #"
+echo "##############################################################################################"
+
+    echo "running xsec friends script"
+    echo "XSEC_FRIENDS: ${XSEC_FRIENDS}"
+    python3 friends/build_friend_tree.py --basepath $KINGMAKER_BASEDIR_XROOTD --outputpath root://cmsdcache-kit-disk.gridka.de/$XSEC_FRIENDS --nthreads 20
+fi
+
 if [[ $MODE == "LOCAL" ]]; then
     source utils/setup_root.sh
     python shapes/produce_shapes_boosted_analyse.py --channels $CHANNEL \
@@ -41,3 +53,11 @@ if [[ $MODE == "LOCAL" ]]; then
         --xrootd --validation-tag $TAG --boosted_tau_analysis
 fi
 
+if [[ $MODE == "CONDOR" ]]; then
+    source utils/setup_root.sh
+    echo "[INFO] Running on Condor"
+    echo "[INFO] Condor output folder: ${CONDOR_OUTPUT}"
+    bash submit/submit_shape_production_boost.sh $ERA $CHANNEL \
+        "singlegraph" $TAG 0 $NTUPLETAG $CONDOR_OUTPUT "TauID" 
+    echo "[INFO] Jobs submitted"
+fi
