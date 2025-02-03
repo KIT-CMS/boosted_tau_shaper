@@ -514,6 +514,19 @@ def main(args):
 
     # boosted_proc = {"data", "ztt", "ztt_nlo", "ttt", "vvt", "w", "w_nlo", "qcdjets"}
     boosted_proc = {"data",  "w", "ztt", "ztt_nlo", "ttt", "vvt","qcdjets"}
+
+    if args.process_selection is None:
+        procS = {
+            "data",
+            "ztt",
+            "ztt_nlo",
+            "ttt", 
+            "vvt",
+            "w", 
+            "qcdjets",
+        }
+    else:
+        procS = args.process_selection
     # boosted_proc_mc = {"w", "ztt", "ztt_nlo", "ttt", "vvt","qcdjets"}
 
     if channel in ["mt"] and args.boosted_tau_analysis == True:
@@ -564,14 +577,14 @@ def main(args):
         print("%s" % graph)
 
     if args.only_create_graphs:
-        if args.control_plots or args.gof_inputs:
-            graph_file_name = "control_unit_graphs-{}-{}-{}.pkl".format(
-                era, ",".join(args.channels), ",".join(sorted(boosted_proc))
-            )
-        else:
-            graph_file_name = "analysis_unit_graphs-{}-{}-{}.pkl".format(
-                era, ",".join(args.channels), ",".join(sorted(boosted_proc))
-            )
+        # if args.control_plots or args.gof_inputs:
+        #     graph_file_name = "control_unit_graphs-{}-{}-{}.pkl".format(
+        #         era, ",".join(args.channels), ",".join(sorted(boosted_proc))
+        #     )
+        # else:
+        graph_file_name = "analysis_unit_graphs-{}-{}-{}.pkl".format(
+            era, ",".join(args.channels), ",".join(sorted(procS))
+        )
         if args.graph_dir is not None:
             graph_file = os.path.join(args.graph_dir, graph_file_name)
         else:
