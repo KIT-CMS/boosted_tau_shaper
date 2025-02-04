@@ -58,6 +58,6 @@ if [[ $MODE == "CONDOR" ]]; then
     echo "[INFO] Running on Condor"
     echo "[INFO] Condor output folder: ${CONDOR_OUTPUT}"
     bash submit/submit_shape_production_boost.sh $ERA $CHANNEL \
-        "singlegraph" $TAG 0 $NTUPLETAG $CONDOR_OUTPUT "TauID" 
+        "singlegraph" $TAG 0 $NTUPLETAG $CONDOR_OUTPUT 
     echo "[INFO] Jobs submitted"
 fi
