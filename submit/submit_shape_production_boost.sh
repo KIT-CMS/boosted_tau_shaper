@@ -14,12 +14,7 @@ OUTPUT=$7
     echo "[ERROR] Number of given parameters is too small."
     exit 1
 )
-[[ ! -z $6 ]] || CONTROL=0
-CONTROL_ARG=""
-if [[ $CONTROL == 1 ]]; then
-    CONTROL_ARG="--gof-inputs --control-plot-set "
-    echo "[INFO] Control plots will be produced. Argument: ${CONTROL_ARG}"
-fi
+
 
 PROCESSES="data,w,ztt,ztt_nlo,ttt,vvt,qcdjets,ggh"
 
@@ -72,10 +67,8 @@ if [[ "$SUBMIT_MODE" == "singlegraph" ]]; then
     echo "output = log/condorShapes/${GF_NAME%.pkl}/\$(cluster).\$(Process).out" >>$OUTPUT/produce_shapes_cc7.jdl
     echo "error = log/condorShapes/${GF_NAME%.pkl}/\$(cluster).\$(Process).err" >>$OUTPUT/produce_shapes_cc7.jdl
     echo "log = log/condorShapes/${GF_NAME%.pkl}/\$(cluster).\$(Process).log" >>$OUTPUT/produce_shapes_cc7.jdl
-    echo "x509userproxy = /home/${USER}/.globus/x509_proxy" >>$OUTPUT/produce_shapes_cc7.jdl
     echo "queue a3,a2,a1 from $OUTPUT/arguments.txt" >>$OUTPUT/produce_shapes_cc7.jdl
     echo "JobBatchName = Shapes_${CHANNEL}_${ERA}" >>$OUTPUT/produce_shapes_cc7.jdl
-    echo "x509userproxy = /home/${USER}/.globus/x509up" >>$OUTPUT/produce_shapes_cc7.jdl
     # Prepare the multicore jdl.
     echo "[INFO] Preparing submission file for multi core jobs for nominal pipeline..."
     cp submit/produce_shapes_cc7.jdl $OUTPUT/produce_shapes_cc7_multicore.jdl
@@ -85,16 +78,14 @@ if [[ "$SUBMIT_MODE" == "singlegraph" ]]; then
     else
         sed -i '/^RequestMemory/c\RequestMemory = 10000' $OUTPUT/produce_shapes_cc7_multicore.jdl
     fi
-    sed -i '/^RequestCpus/c\RequestCpus = 8' $OUTPUT/produce_shapes_cc7_multicore.jdl
-    sed -i '/^arguments/c\arguments = $(a1) $(a2) $(a3) $(a4)' ${OUTPUT}/produce_shapes_cc7_multicore.jdl
+    sed -i '/^RequestCpus/c\RequestCpus = 1' $OUTPUT/produce_shapes_cc7_multicore.jdl
+    sed -i '/^arguments/c\arguments = $(Proxy_path) $(a1) $(a2) $(a3) $(a4)' ${OUTPUT}/produce_shapes_cc7_multicore.jdl
     # Add log file locations to output file.
     echo "output = log/condorShapes/${GF_NAME%.pkl}/multicore.\$(cluster).\$(Process).out" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
     echo "error = log/condorShapes/${GF_NAME%.pkl}/multicore.\$(cluster).\$(Process).err" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
     echo "log = log/condorShapes/${GF_NAME%.pkl}/multicore.\$(cluster).\$(Process).log" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
     echo "JobBatchName = Shapes_${CHANNEL}_${ERA}" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
-    echo "x509userproxy = /home/${USER}/.globus/x509_proxy" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
     echo "queue a3,a2,a4,a1 from $OUTPUT/arguments_multicore.txt" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
-    echo "x509userproxy = /home/${USER}/.globus/x509up" >>$OUTPUT/produce_shapes_cc7_multicore.jdl
     # Assemble the arguments.txt file used in the submission
     python submit/prepare_args_file.py --graph-file $GRAPH_FILE --output-dir $OUTPUT --pack-multiple-pipelines 10
     echo "[INFO] Submit shape production with 'condor_submit $OUTPUT/produce_shapes_cc7.jdl' and 'condor_submit $OUTPUT/produce_shapes_cc7_multicore.jdl'"
