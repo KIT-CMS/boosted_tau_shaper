@@ -513,7 +513,7 @@ def main(args):
         )
 
     # boosted_proc = {"data", "ztt", "ztt_nlo", "ttt", "vvt", "w", "w_nlo", "qcdjets"}
-    boosted_proc = {"data",  "w", "ztt", "ztt_nlo", "ttt", "vvt","qcdjets"}
+    boosted_proc = {"data",  "w", "ztt", "ztt_nlo", "ttt", "vvt","qcdjets", "ggh"}
 
     if args.process_selection is None:
         procS = {
@@ -524,6 +524,7 @@ def main(args):
             "vvt",
             "w", 
             "qcdjets",
+            "ggh",
         }
     else:
         procS = args.process_selection
