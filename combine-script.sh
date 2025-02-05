@@ -17,7 +17,9 @@ source utils/setup_ul_samples.sh $NTUPLETAG $ERA
 output_shapes="control_shapes-${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}"
 CONDOR_OUTPUT=output/condor_shapes/${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}
 shapes_output=output/${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}/${output_shapes}
-shape_rootfile=${shapes_output}.root
+shapes_output_synced=output/${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}/synced
+shapes_rootfile=${shapes_output}.root
+shapes_rootfile_synced=${shapes_output_synced}_synced.root
 # print the paths to be used
 echo "KINGMAKER_BASEDIR: $KINGMAKER_BASEDIR"
 echo "BASEDIR: ${BASEDIR}"
@@ -60,4 +62,35 @@ if [[ $MODE == "CONDOR" ]]; then
     bash submit/submit_shape_production_boost.sh $ERA $CHANNEL \
         "singlegraph" $TAG 0 $NTUPLETAG $CONDOR_OUTPUT 
     echo "[INFO] Jobs submitted"
+fi
+
+if [[ $MODE == "MERGE" ]]; then
+    source utils/setup_root.sh
+    echo "[INFO] Merging outputs located in ${CONDOR_OUTPUT}"
+    hadd -j 5 -n 600 -f $shapes_rootfile ${CONDOR_OUTPUT}/../analysis_unit_graphs-${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}/*.root
+fi
+
+if [[ $MODE == "SYNC" ]]; then
+    source utils/setup_root.sh
+
+    echo "##############################################################################################"
+    echo "#     synced shapes                                      #"
+    echo "##############################################################################################"
+
+    # if the output folder does not exist, create it
+    if [ ! -d "$shapes_output_synced" ]; then
+        mkdir -p $shapes_output_synced
+    fi
+
+    python shapes/convert_to_synced_shapes.py -e $ERA \
+        -i ${shapes_rootfile} \
+        -o ${shapes_output_synced} \
+        --variable-selection ${VARIABLES} \
+        -n 1
+
+    inputfile="htt_${CHANNEL}.inputs-sm-Run${ERA}${POSTFIX}.root"
+    hadd -f $shapes_output_synced/$inputfile $shapes_output_synced/${ERA}-${CHANNEL}*.root
+
+
+    exit 0
 fi
