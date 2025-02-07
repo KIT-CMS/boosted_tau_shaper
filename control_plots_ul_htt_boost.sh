@@ -77,8 +77,6 @@ if [[ $MODE == "PLOT" ]]; then
 
     # python3 plotting/plot_shapes_control.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --embedding --fake-factor
     # python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --embedding
-    python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL}  --boost --scaleZTT
-    # python3 plotting/plot_shapes_control.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --fake-factor
-
-    # python2 ~/tools/webgallery/gallery.py Run${ERA}_plots_emb_classic/
+    # python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL}  --boost --blind-data --scaleGGH
+    python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --blind-data --boost --scaleZTT  --scaleGGH
 fi
