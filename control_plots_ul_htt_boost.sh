@@ -51,7 +51,7 @@ if [[ $MODE == "SHAPES" ]]; then
         mkdir -p $shapes_output
     fi
     
-    python shapes/produce_shapes_htt_boost.py --channels $CHANNEL \
+    python shapes/produce_shapes_htt_boost_conrol.py --channels $CHANNEL \
         --directory $NTUPLES \
         --${CHANNEL}-friend-directory $XSEC_FRIENDS \
         --era $ERA --num-processes 4 --num-threads 12 \
@@ -78,5 +78,5 @@ if [[ $MODE == "PLOT" ]]; then
     # python3 plotting/plot_shapes_control.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --embedding --fake-factor
     # python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --embedding
     # python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL}  --boost --blind-data --scaleGGH
-    python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --blind-data --boost --scaleZTT  --scaleGGH
+    python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}.root --variables ${VARIABLES} --channels ${CHANNEL} --boost --blind-data --scaleZTT --scaleGGH
 fi
