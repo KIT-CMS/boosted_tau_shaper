@@ -12,9 +12,7 @@ logger = logging.getLogger("")
 _process_map = {
         "data": "data",
         "ZTT": "DY",
-        "ZTT_NLO": "DYNLO",
-        "ZL_NLO": "DYNLO",
-        "ZJ_NLO": "DYNLO",
+        "ZTT_NLO": "DY_NLO",
         "TTT": "TT",
         "VVT": "VV",
         "W": "W",
