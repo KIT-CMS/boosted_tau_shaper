@@ -339,6 +339,8 @@ def main(args):
                 process  = "EMB_"+category+"_0.0"
             if "emb" in process:
                 process = "EMB_"+category+"_"+tau_es_map[process]
+            if "GGH" in process:
+                process = "GGH_" + category
         elif category == "control_region":
             if "EMB" in process:
                 process  = "EMB"
