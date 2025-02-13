@@ -1,4 +1,3 @@
-source utils/setup_root.sh
 export PYTHONPATH=$PYTHONPATH:$PWD/Dumbledraw
 CHANNEL=$1
 ERA=$2
@@ -12,7 +11,6 @@ POSTFIX="-ML"
 
 
 ulimit -s unlimited
-source utils/setup_root.sh
 source utils/setup_ul_samples.sh $NTUPLETAG $ERA
 
 output_shapes="control_shapes-${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}"
@@ -39,67 +37,7 @@ if [ ! -d "$shapes_output" ]; then
 fi
 
 
-if [[ $MODE == "XSEC" ]]; then
 
-echo "##############################################################################################"
-echo "#      Checking xsec friends directory                                                       #"
-echo "##############################################################################################"
-
-    echo "running xsec friends script"
-    echo "XSEC_FRIENDS: ${XSEC_FRIENDS}"
-    python3 friends/build_friend_tree.py --basepath $KINGMAKER_BASEDIR_XROOTD --outputpath root://cmsdcache-kit-disk.gridka.de/$XSEC_FRIENDS --nthreads 20
-fi
-
-if [[ $MODE == "LOCAL" ]]; then
-    source utils/setup_root.sh
-    python shapes/produce_shapes_boosted_analyse.py --channels $CHANNEL \
-        --directory $NTUPLES \
-        --${CHANNEL}-friend-directory $XSEC_FRIENDS \
-        --era $ERA --num-processes 3 --num-threads 9 \
-        --optimization-level 1 \
-        --output-file $shapes_output \
-        --xrootd --validation-tag $TAG --boosted_tau_analysis
-fi
-
-if [[ $MODE == "CONDOR" ]]; then
-    source utils/setup_root.sh
-    echo "[INFO] Running on Condor"
-    echo "[INFO] Condor output folder: ${CONDOR_OUTPUT}"
-    bash submit/submit_shape_production_boost.sh $ERA $CHANNEL \
-        "singlegraph" $TAG 0 $NTUPLETAG $CONDOR_OUTPUT 
-    echo "[INFO] Jobs submitted"
-fi
-
-if [[ $MODE == "MERGE" ]]; then
-    source utils/setup_root.sh
-    echo "[INFO] Merging outputs located in ${CONDOR_OUTPUT}"
-    hadd -j 5 -n 600 -f $shapes_rootfile ${CONDOR_OUTPUT}/../analysis_unit_graphs-${ERA}-${CHANNEL}-${NTUPLETAG}-${TAG}/*.root
-fi
-
-if [[ $MODE == "SYNC" ]]; then
-    source utils/setup_root.sh
-
-    echo "##############################################################################################"
-    echo "#     synced shapes                                      #"
-    echo "##############################################################################################"
-
-    # if the output folder does not exist, create it
-    if [ ! -d "$shapes_output_synced" ]; then
-        mkdir -p $shapes_output_synced
-    fi
-
-    python shapes/convert_to_synced_shapes.py -e $ERA \
-        -i ${shapes_rootfile} \
-        -o ${shapes_output_synced} \
-        --variable-selection ${VARIABLES} \
-        -n 1
-
-    inputfile="htt_${CHANNEL}.inputs-sm-Run${ERA}${POSTFIX}.root"
-    hadd -f $shapes_output_synced/$inputfile $shapes_output_synced/${ERA}-${CHANNEL}*.root
-
-
-    exit 0
-fi
 
 if [[ "${ERA}" == "2018"  ||  "${ERA}" == "2017" ]]; then 
     datacard_era=${ERA}
@@ -113,7 +51,7 @@ if [[ $MODE == "DATACARD" ]]; then
         for sf_cat in "${fj_softdrop_m_categories[@]}"
     do
         inputfile="htt_${CHANNEL}.inputs-sm-Run${ERA}${POSTFIX}.root"
-        # # for category in "dm_binned"
+        # for category in "dm_binned"
         $CMSSW_BASE/bin/el9_amd64_gcc12/MorphingTauID2017 \
             --base_path=$PWD \
             --input_folder_mt=$shapes_output_synced \
@@ -136,10 +74,57 @@ if [[ $MODE == "DATACARD" ]]; then
     
         cd $THIS_PWD
 
-        # echo "[INFO] Create Workspace for datacard"
-        # combineTool.py -M T2W -i output/$datacard_output_dm/htt_mt_${sf_cat}/ -o workspace_sf.root --parallel 4 -m 125
+        echo "[INFO] Create Workspace for datacard"
+        combineTool.py -M T2W -i output/$datacard_output/htt_mt_${sf_cat}/ -o workspace_${sf_cat}.root --parallel 4 -m 125
     done
 
     exit 0
 
 fi
+
+
+if [[ $MODE == "FIT_LIMITS" ]]; then
+    source utils/setup_cmssw.sh
+    combineTool.py \
+        -M AsymptoticLimits \
+        -m 125 \
+        -d output/$datacard_output/htt_mt_*/combined.txt.cmb \
+        -n $ERA \
+        --parallel 1 --there --verbose 2 \
+        --cminDefaultMinimizerStrategy 1 --cminDefaultMinimizerTolerance 0.01 \
+        --run blind 
+    echo "[INFO] Fit is done"
+fi
+
+# if [[ $MODE == "FIT" ]]; then
+#     source utils/setup_cmssw.sh
+#     combineTool.py \
+#         -M MultiDimFit \
+#         -m 125 \
+#         -d output/$datacard_output/htt_mt_*/workspace_fj_softdrop*.root \
+#         --algo singles --robustFit 1 \
+#         --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+#         -n $ERA -v1 \
+#         --parallel 1 \ 
+#         --setParameterRanges r=-200,100 \
+#         --setParameters r=1 \ 
+#         -t -1
+
+# fi
+
+if [[ $MODE == "FIT" ]]; then
+    source utils/setup_cmssw.sh
+
+    combine -M MultiDimFit \
+    -m 125 \
+    -d /work/olavoryk/tau_pog_tau_sfs/boost_htt_v15Frb/boosted_tau_shaper/output/datacards_dm_sim_fit_proc/boost_mc_data_18UL_5Feb25_unc_v1-proc/2018_tauid/htt_mt_fj_softdrop_90_120/workspace_fj_softdrop_90_120.root \
+    --algo singles --robustFit 1 \
+    --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+    --setParameterRanges r=-200,100 \
+    --setParameters r=1 \
+    -t -1
+
+
+fi
+
+
