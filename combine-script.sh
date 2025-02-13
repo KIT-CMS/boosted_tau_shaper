@@ -112,19 +112,34 @@ fi
 
 # fi
 
-if [[ $MODE == "FIT" ]]; then
+if [[ $MODE == "WORKSPACE_MULT" ]]; then
     source utils/setup_cmssw.sh
 
-    combine -M MultiDimFit \
-    -m 125 \
-    -d /work/olavoryk/tau_pog_tau_sfs/boost_htt_v15Frb/boosted_tau_shaper/output/datacards_dm_sim_fit_proc/boost_mc_data_18UL_5Feb25_unc_v1-proc/2018_tauid/htt_mt_fj_softdrop_90_120/workspace_fj_softdrop_90_120.root \
-    --algo singles --robustFit 1 \
-    --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
-    --setParameterRanges r=-200,100 \
-    --setParameters r=1 \
-    -t -1
+    combineTool.py -M T2W -i output/$datacard_output/cmb \
+                -o out_multidim.root \
+                --parallel 8 -m 125 \
+                -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel \
+                --PO '"map=^.*/GGH_fj_softdrop_50_90:r_GGH_fj_softdrop_50_90[1,-100,100]"' \
+                --PO '"map=^.*/GGH_fj_softdrop_90_120:r_GGH_fj_softdrop_90_120[1,-100,100]"' 
 
 
 fi
 
 
+if [[ $MODE == "MULTIFIT" ]]; then
+
+        combineTool.py \
+        -n .multidim_pt_fit \
+        -M MultiDimFit\
+        -m 125 -d output/$datacard_output/cmb/out_multidim.root \
+        --algo singles \
+        --robustFit 1 \
+        --X-rtd MINIMIZER_analytic \
+        --cminDefaultMinimizerStrategy 0 \
+        --floatOtherPOIs 1 \
+        --expectSignal 1 \
+        -v1 --robustHesse 1 --setParameters r_GGH_fj_softdrop_50_90=1,r_GGH_fj_softdrop_90_120=1 --redefineSignalPOIs r_GGH_fj_softdrop_50_90,r_GGH_fj_softdrop_90_120 -t -1
+         
+        
+
+fi
