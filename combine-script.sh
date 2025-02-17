@@ -96,50 +96,47 @@ if [[ $MODE == "FIT_LIMITS" ]]; then
     echo "[INFO] Fit is done"
 fi
 
-# if [[ $MODE == "FIT" ]]; then
-#     source utils/setup_cmssw.sh
-#     combineTool.py \
-#         -M MultiDimFit \
-#         -m 125 \
-#         -d output/$datacard_output/htt_mt_*/workspace_fj_softdrop*.root \
-#         --algo singles --robustFit 1 \
-#         --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
-#         -n $ERA -v1 \
-#         --parallel 1 \ 
-#         --setParameterRanges r=-200,100 \
-#         --setParameters r=1 \ 
-#         -t -1
 
-# fi
+if [[ $MODE == "WORKSPACE_MULTCAT" ]]; then
+   source utils/setup_cmssw.sh
 
-if [[ $MODE == "WORKSPACE_MULT" ]]; then
-    source utils/setup_cmssw.sh
 
-    combineTool.py -M T2W -i output/$datacard_output/cmb \
-                -o out_multidim.root \
-                --parallel 8 -m 125 \
-                -P HiggsAnalysis.CombinedLimit.PhysicsModel:multiSignalModel \
-                --PO '"map=^.*/GGH_fj_softdrop_50_90:r_GGH_fj_softdrop_50_90[1,-100,100]"' \
-                --PO '"map=^.*/GGH_fj_softdrop_90_120:r_GGH_fj_softdrop_90_120[1,-100,100]"' 
+        combineTool.py -M T2W -i output/$datacard_output/cmb \
+        -o output_multicat.root --parallel 4 -m 125
 
 
 fi
 
 
-if [[ $MODE == "MULTIFIT" ]]; then
+if [[ $MODE == "FIT_MULTCAT" ]]; then
+   source utils/setup_cmssw.sh
 
-        combineTool.py \
-        -n .multidim_pt_fit \
-        -M MultiDimFit\
-        -m 125 -d output/$datacard_output/cmb/out_multidim.root \
-        --algo singles \
-        --robustFit 1 \
-        --X-rtd MINIMIZER_analytic \
-        --cminDefaultMinimizerStrategy 0 \
-        --floatOtherPOIs 1 \
-        --expectSignal 1 \
-        -v1 --robustHesse 1 --setParameters r_GGH_fj_softdrop_50_90=1,r_GGH_fj_softdrop_90_120=1 --redefineSignalPOIs r_GGH_fj_softdrop_50_90,r_GGH_fj_softdrop_90_120 -t -1
-         
-        
 
+        combineTool.py -M MultiDimFit -m 125 -d  output/$datacard_output/cmb/combined.txt.cmb \
+        --algo singles --robustFit 1 --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+        --setParameterRanges r=-30,30  --setParameters r=1  -t -1
+
+
+fi
+
+
+
+if [[ $MODE == "IMPACTS" ]]; then
+    source utils/setup_cmssw.sh
+    WORKSPACE=output/$datacard_output/cmb/output_multicat.root
+    combineTool.py -M Impacts -d $WORKSPACE -m 125 \
+                --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+                --doInitialFit --robustFit 1 \
+                --parallel 16 --setParameters r=1 -t -1  --setParameterRanges r=-30,30
+
+    combineTool.py -M Impacts -d $WORKSPACE -m 125 \
+                --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+                --robustFit 1 --doFits \
+                --parallel 16 --setParameters r=1 -t -1  --setParameterRanges r=-30,30
+
+    combineTool.py -M Impacts -d $WORKSPACE -m 125 -o tauid_${WP}_impacts.json
+    plotImpacts.py -i tauid_${WP}_impacts.json -o tauid_${WP}_impacts
+    # cleanup the fit files
+    rm higgsCombine*.root
+    exit 0
 fi
