@@ -558,7 +558,23 @@ def main(args):
             um,
             processes=boosted_proc- {"data"},
             datasets=nominals[era]["units"][channel],
-            variations=[met_unclustered, pileup_reweighting],
+            variations=[pileup_reweighting],
+            enable_check=do_check,
+        )
+
+        book_histograms(
+            um,
+            processes=boosted_proc- {"data"},
+            datasets=nominals[era]["units"][channel],
+            variations=[met_unclustered],
+            enable_check=do_check,
+        )
+
+        book_histograms(
+            um,
+            processes={"ttt"},
+            datasets=nominals[era]["units"][channel],
+            variations=[top_pt],
             enable_check=do_check,
         )
 

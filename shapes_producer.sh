@@ -78,25 +78,19 @@ fi
 
 if [[ $MODE == "SYNC" ]]; then
     source utils/setup_root.sh
-
     echo "##############################################################################################"
     echo "#     synced shapes                                      #"
     echo "##############################################################################################"
-
     # if the output folder does not exist, create it
     if [ ! -d "$shapes_output_synced" ]; then
         mkdir -p $shapes_output_synced
-    fiKo
-
+    fi
     python shapes/convert_to_synced_shapes.py -e $ERA \
         -i ${shapes_rootfile} \
         -o ${shapes_output_synced} \
         --variable-selection ${VARIABLES} \
         -n 1
-
     inputfile="htt_${CHANNEL}.inputs-sm-Run${ERA}${POSTFIX}.root"
     hadd -f $shapes_output_synced/$inputfile $shapes_output_synced/${ERA}-${CHANNEL}*.root
-
-
     exit 0
 fi
