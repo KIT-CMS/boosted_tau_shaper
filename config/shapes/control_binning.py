@@ -106,7 +106,8 @@ common_bining_boost_htt = {
     "met_fatjet_pt" : Histogram("met_fatjet_pt", "met_fatjet_pt", np.linspace(0, 1000, 20)),
     "fj_Xtm_m_inv_ditau" : Histogram("fj_Xtm_m_inv_ditau", "fj_Xtm_m_inv_ditau", np.arange(0, 450, 10)),
 
-    "nbtag_in_fatjet" : Histogram("nbtag_in_fatjet", "nbtag_in_fatjet", [-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5]),
+    "nbtag" : Histogram("nbtag", "nbtag", [-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5]),
+    "mt_fatjet" : Histogram("mt_fatjet", "mt_fatjet", np.linspace(0, 150, 30)),
 
 }
 
