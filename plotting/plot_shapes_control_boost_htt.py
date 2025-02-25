@@ -10,6 +10,7 @@ import argparse
 import copy
 import yaml
 import os
+import math
 
 import logging
 logger = logging.getLogger("")
@@ -345,7 +346,14 @@ def main(info):
         plot.add_hist(scaledGGH_hist, "scaledGGH", "scaledGGH")
         plot.subplot(0).setGraphStyle("scaledGGH", "hist", linecolor=styles.color_dict["ggH"], linewidth=2)
 
-            
+
+    scaledGGH_hist = rootfile.get_boost_file(channel, "GGH", category=cat, shape_type=stype).Clone()
+    w_hist = rootfile.get(channel, "W", category=cat, shape_type=stype).Clone()    
+
+    ggh_yield = scaledGGH_hist.Integral()
+    w_yield = w_hist.Integral()
+
+    signif = ggh_yield / math.sqrt(ggh_yield + w_yield)
 
     # get signal histograms
     plot_idx_to_add_signal = [0,2] if args.linear else [1,2]
@@ -614,6 +622,11 @@ def main(info):
             plot.legend(i).add_entry(0, "scaledZTT", "Z#rightarrow#tau#tau #times "+str(scaledZTT_scale), 'l')
         if args.scaleGGH:
             plot.legend(i).add_entry(0, "scaledGGH", "gg#rightarrowH #times "+str(scaledGGH_scale), 'l')
+    latex = ROOT.TLatex()
+    latex.SetNDC()  # Normalized device coordinates (0-1)
+    latex.SetTextSize(0.03)  # Adjust text size
+    latex.SetTextFont(42)  # CMS-style font
+    latex.DrawLatex(0.2, 0.55, r"\frac{S}{\sqrt(S+B)}= %.2f" % signif)
     plot.legend(0).Draw()
     plot.legend(1).setAlpha(0.0)
     plot.legend(1).Draw()

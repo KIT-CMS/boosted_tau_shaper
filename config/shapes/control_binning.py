@@ -85,7 +85,7 @@ common_bining_boost_htt = {
     "fj_Xtm_eta" : Histogram("fj_Xtm_eta", "fj_Xtm_eta", np.linspace(-2.5, 2.5, 50)),
     "fj_Xtm_mass" : Histogram("fj_Xtm_mass", "fj_Xtm_mass", np.arange(20, 250, 10)),
     "fj_Xtm_phi" : Histogram("fj_Xtm_phi", "fj_Xtm_phi", np.linspace(-3.14, 3.14, 50)),
-    "fj_Xtm_particleNet_XtmVsQCD" : Histogram("fj_Xtm_particleNet_XtmVsQCD", "fj_Xtm_particleNet_XtmVsQCD", np.linspace(0, 1, 20)),
+    "fj_Xtm_particleNet_XtmVsQCD" : Histogram("fj_Xtm_particleNet_XtmVsQCD", "fj_Xtm_particleNet_XtmVsQCD", np.linspace(0.995, 1, 20)),
     "fj_Xte_particleNet_XteVsQCD" : Histogram("fj_Xte_particleNet_XteVsQCD", "fj_Xte_particleNet_XteVsQCD", np.linspace(0, 1, 20) ),
     "fj_Xtt_particleNet_XttVsQCD" : Histogram("fj_Xtt_particleNet_XttVsQCD", "fj_Xtt_particleNet_XttVsQCD", np.linspace(0, 1, 20)),
 
@@ -94,8 +94,8 @@ common_bining_boost_htt = {
     "fj_Xtm_nsubjettiness_3over2": Histogram("fj_Xtm_nsubjettiness_3over2", "fj_Xtm_nsubjettiness_3over2", np.linspace(0, 1, 20)),
     "fj_Xtm_met_deltaPhi": Histogram("fj_Xtm_met_deltaPhi", "fj_Xtm_met_deltaPhi", np.linspace(-4, 4, 50)  ),
 
-    "muons_finalstate" : Histogram("muons_finalstate", "muons_finalstate", np.linspace(0, 20, 20)),
-    "eles_finalstate" : Histogram("eles_finalstate", "eles_finalstate", np.linspace(0, 20, 20)),
+    "muons_finalstate" : Histogram("muons_finalstate", "muons_finalstate", [-0.5, 0.5, 1.5, 2.5]),
+    "eles_finalstate" : Histogram("eles_finalstate", "eles_finalstate", [-0.5, 0.5, 1.5, 2.5]),
     "nfatjets" : Histogram("nfatjets", "nfatjets", np.linspace(0, 10, 10)),
 
     "mu_tau_finalstate_deltaR" : Histogram("mu_tau_finalstate_deltaR", "mu_tau_finalstate_deltaR", np.linspace(0, 1, 20)),
