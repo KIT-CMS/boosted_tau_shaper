@@ -163,3 +163,27 @@ if [[ $MODE == "POSTFIT" ]]; then
 
 
 fi
+
+if [[ $MODE == "POSTFIT_PLOT" ]]; then
+   source utils/setup_cmssw.sh
+
+            for RESDIR in "${fj_softdrop_m_categories[@]}" 
+      do
+
+        WORKSPACE=output/$datacard_output/cmb/output_multicat.root
+        CATEGORY=$RESDIR
+        FILE=output/$datacard_output/cmb/postfitshape.root
+
+        # create output folder if it does not exist
+        if [ ! -d "output/postfitplots_${TAG}_postfit/" ]; then
+            mkdir -p output/postfitplots_${TAG}_postfit/
+        fi
+
+        echo "[INFO] Postfits plots for category $CATEGORY"
+
+        python3 plotting/prefit-postfit.py -l --era ${ERA} --input ${FILE} --channel ${CHANNEL}  --single-category $CATEGORY --categories "None" -o output/postfitplots_${TAG}_postfit/ --prefit
+        python3 plotting/prefit-postfit.py -l --era ${ERA} --input ${FILE} --channel ${CHANNEL}  --single-category $CATEGORY --categories "None" -o output/postfitplots_${TAG}_postfit/
+
+    done
+
+fi
