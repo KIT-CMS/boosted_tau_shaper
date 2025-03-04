@@ -67,8 +67,6 @@ def channel_selection(channel, era, special=None, boosted_tau=False):
                         ("eles_finalstate==0", "ele_veto"),
                         ("mu_tau_finalstate==1", "mutau_state"),
                         ("fj_Xtm_msoftdrop>40", "msoftdrop"),
-                        ("nbtag==0", "nbjets"),
-                        ("mt_fatjet<60", "mT_mu_MET"),
                         ("( fj_Xtm_particleNet_XtmVsQCD > fj_Xtt_particleNet_XttVsQCD ) && ( fj_Xtm_particleNet_XtmVsQCD > fj_Xte_particleNet_XteVsQCD )", "tm_max")
                   
                     ]

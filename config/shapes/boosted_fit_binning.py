@@ -9,17 +9,23 @@ discriminator_binning_enlarged = np.arange(30, 160, 5)
 
 categories = {
     "mt": {
-        "fj_softdrop_50_90": {
+        "fj_wjets_enriched": {
             "var": discriminator_variable,
             "bins": discriminator_binning,
             "expression": discriminator_variable,
-            "cut": "(fj_Xtm_msoftdrop >= 50) && (fj_Xtm_msoftdrop < 90)",
+            "cut": "(mt_fatjet > 60) && (nbtag==0)",
         },
-        "fj_softdrop_90_120": {
+        "fj_tt_enriched": {
             "var": discriminator_variable,
             "bins": discriminator_binning,
             "expression": discriminator_variable,
-            "cut": "(fj_Xtm_msoftdrop >= 90) && (fj_Xtm_msoftdrop < 120)",
+            "cut": "(mt_fatjet < 60) && (nbtag>0)",
+        },
+        "fj_ggH_enriched": {
+            "var": discriminator_variable,
+            "bins": discriminator_binning,
+            "expression": discriminator_variable,
+            "cut": "(mt_fatjet < 60) && (nbtag==0)",
         },
     }
 }

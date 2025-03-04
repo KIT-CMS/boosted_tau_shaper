@@ -29,7 +29,7 @@ echo "output_shapes: ${output_shapes}"
 
 
 
-fj_softdrop_m_categories=("fj_softdrop_50_90" "fj_softdrop_90_120")
+fj_softdrop_m_categories=("fj_wjets_enriched" "fj_tt_enriched" "fj_ggH_enriched")
 
 # if the output folder does not exist, create it
 if [ ! -d "$shapes_output" ]; then
