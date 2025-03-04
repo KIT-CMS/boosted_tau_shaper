@@ -56,7 +56,7 @@ if [[ $MODE == "DATACARD" ]]; then
             --base_path=$PWD \
             --input_folder_mt=$shapes_output_synced \
             --input_folder_mm=$shapes_output_synced \
-            --real_data=true \
+            --real_data=false \
             --classic_bbb=false \
             --binomial_bbb=false \
             --jetfakes=0 \
@@ -113,8 +113,9 @@ if [[ $MODE == "FIT_MULTCAT" ]]; then
 
 
         combineTool.py -M MultiDimFit -m 125 -d  output/$datacard_output/cmb/combined.txt.cmb \
-        --algo singles --robustFit 1 --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
-        --setParameterRanges r=-30,30  --setParameters r=1  -t -1
+        --algo singles --robustFit 1 --X-rtd FITTER_NEVER_GIVE_UP --cminDefaultMinimizerStrategy 2 \
+        --setParameterRanges r=-30,30  --setParameters r=1  -t -1 \
+        --cminFallbackAlgo Minuit2,Migrad,0:0.01 --cminPreScan
 
 
 fi
@@ -125,18 +126,40 @@ if [[ $MODE == "IMPACTS" ]]; then
     source utils/setup_cmssw.sh
     WORKSPACE=output/$datacard_output/cmb/output_multicat.root
     combineTool.py -M Impacts -d $WORKSPACE -m 125 \
-                --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+                --X-rtd FITTER_NEVER_GIVE_UP --cminDefaultMinimizerStrategy 2 \
                 --doInitialFit --robustFit 1 \
-                --parallel 16 --setParameters r=1 -t -1  --setParameterRanges r=-30,30
+                --parallel 16 --setParameters r=1 -t -1  --setParameterRanges r=-30,30 -v2 \
+                --cminFallbackAlgo Minuit2,Migrad,0:0.01 --cminPreScan
 
     combineTool.py -M Impacts -d $WORKSPACE -m 125 \
-                --X-rtd MINIMIZER_analytic --cminDefaultMinimizerStrategy 0 \
+                --X-rtd FITTER_NEVER_GIVE_UP --cminDefaultMinimizerStrategy 2 \
                 --robustFit 1 --doFits \
-                --parallel 16 --setParameters r=1 -t -1  --setParameterRanges r=-30,30
+                --parallel 16 --setParameters r=1 -t -1  --setParameterRanges r=-30,30 -v2 \
+                --cminFallbackAlgo Minuit2,Migrad,0:0.01 --cminPreScan
 
     combineTool.py -M Impacts -d $WORKSPACE -m 125 -o tauid_${WP}_impacts.json
     plotImpacts.py -i tauid_${WP}_impacts.json -o tauid_${WP}_impacts
     # cleanup the fit files
     rm higgsCombine*.root
     exit 0
+fi
+
+if [[ $MODE == "POSTFIT" ]]; then
+   source utils/setup_cmssw.sh
+
+
+        FILE=output/$datacard_output/cmb/postfitshape.root
+        FITFILE=output/$datacard_output/cmb/fitDiagnostics.${ERA}.root
+
+
+        combineTool.py -M FitDiagnostics -m 125 -d  output/$datacard_output/cmb/output_multicat.root \
+        --setParameterRanges r=-30,30  --setParameters r=1  -t -1 \
+        --robustFit=1  --X-rtd FITTER_NEVER_GIVE_UP --cminDefaultMinimizerStrategy 2 \
+        --cminFallbackAlgo Minuit2,Migrad,0:0.01  --cminPreScan \
+        --parallel 16   -v2  --saveShapes --saveWithUncertainties 
+
+        mv fitDiagnostics.Test.root $FITFILE
+        mv higgsCombine.Test.FitDiagnostics.mH125.root output/$datacard_output/cmb/
+
+
 fi
