@@ -199,7 +199,7 @@ def main(args):
     #     ]
     # bkg_processes = ["QCD", "VVJ", "VVL", "W", "TTJ", "TTL", "ZJ", "ZL", "EMB"]
     # bkg_processes = ["QCD", "VVJ", "VVL", "W", "TTJ", "TTL", "ZJ", "ZL", "EMB_"+str(args.single_category)]
-    bkg_processes = ["W", "QCDJETS", "ZTT_NLO", "TTT", "VVT" "GGH_"+str(args.single_category)]
+    bkg_processes = ["W", "QCDJETS", "ZTT_NLO", "TTT", "VVT", ]
     all_bkg_processes = [b for b in bkg_processes]
     legend_bkg_processes = copy.deepcopy(bkg_processes)
     legend_bkg_processes.reverse()
@@ -248,6 +248,7 @@ def main(args):
             bkg_processes = [b for b in all_bkg_processes]
         legend_bkg_processes = copy.deepcopy(bkg_processes)
         legend_bkg_processes.reverse()
+        print("Legend processes: ", legend_bkg_processes)
         # create plot
         width = 600
         if args.linear:
@@ -267,9 +268,9 @@ def main(args):
             except BaseException:
                 pass
 
-        plot.setGraphStyle(
-                bkg_processes[-1], "hist", fillcolor=styles.color_dict["EMB"]
-            )
+        # plot.setGraphStyle(
+        #         bkg_processes[-1], "hist", fillcolor=styles.color_dict["EMB"]
+        #     )
         data_obs = rootfile.get(era, channel, category, "data_obs")
         plot.add_hist(data_obs, "data_obs")
 
@@ -363,14 +364,14 @@ def main(args):
                         0,
                         process,
                         styles.legend_label_dict[
-                            process.replace("TTL", "TT").replace("VVL", "VV")
+                            process.replace("TTL", "TT").replace("VVL", "VV").replace("_NLO", "")
                         ],
                         "f",
                     )
                 except BaseException:
                     pass
-            if channel != "mm":
-                plot.legend(i).add_entry(0, legend_bkg_processes[0], f"#tau  {legend_bkg_processes[0]}" , "f")
+            # if channel != "mm":
+            plot.legend(i).add_entry(0, legend_bkg_processes[0], f"{legend_bkg_processes[0]}" , "f")
             # plot.legend(i).add_entry(0, "total_bkg", "Bkg. unc.", "f")
             plot.legend(i).add_entry(0, "model_total", "Bkg. unc.", "f")
             plot.legend(i).add_entry(0, "data_obs", "Data", "PE")
