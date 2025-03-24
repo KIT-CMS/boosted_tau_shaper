@@ -108,6 +108,7 @@ common_bining_boost_htt = {
 
     "nbtag" : Histogram("nbtag", "nbtag", [-0.5, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5]),
     "mt_fatjet" : Histogram("mt_fatjet", "mt_fatjet", np.linspace(0, 150, 30)),
+    "mtt_coll_approx" : Histogram("mtt_coll_approx", "mtt_coll_approx", np.linspace(0, 200, 40)),
 
 }
 
