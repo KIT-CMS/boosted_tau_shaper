@@ -181,8 +181,8 @@ if [[ $MODE == "POSTFIT_PLOT" ]]; then
 
         echo "[INFO] Postfits plots for category $CATEGORY"
 
-        python3 plotting/prefit-postfit.py -l --era ${ERA} --input ${FILE} --channel ${CHANNEL}  --single-category $CATEGORY --categories "None" -o output/postfitplots_${TAG}_postfit/ --prefit
-        python3 plotting/prefit-postfit.py -l --era ${ERA} --input ${FILE} --channel ${CHANNEL}  --single-category $CATEGORY --categories "None" -o output/postfitplots_${TAG}_postfit/
+        python3 plotting/prefit-postfit.py -l --era ${ERA} --input ${FILE} --channel ${CHANNEL}  --single-category $CATEGORY --categories "None" -o output/postfitplots_${TAG}_postfit --prefit
+        python3 plotting/prefit-postfit.py -l --era ${ERA} --input ${FILE} --channel ${CHANNEL}  --single-category $CATEGORY --categories "None" -o output/postfitplots_${TAG}_postfit
 
     done
 
