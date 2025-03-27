@@ -13,11 +13,11 @@ VAR_SUBJET="fj_Xtm_nsubjettiness_2over1,fj_Xtm_nsubjettiness_3over2"
 VAR_FINALSTATE="muons_finalstate,eles_finalstate"
 VAR_MU_TAU="mu_tau_finalstate_deltaR,mu_tau_finalstate_mu_pt,mu_tau_finalstate_mu_eta,mu_tau_finalstate_mu_iso"
 VAR_MET="fj_Xtm_met_deltaPhi,met_fatjet_pt"
-VAR_COLL_APPROX="fj_Xtm_m_inv_ditau"
-VAR_N_BJETS="nbtag_in_fatjet"
+VAR_COLL_APPROX="mtt_coll_approx"
+VAR_N_BJETS="nbtag"
+VAR_MT="mt_fatjet"
 
-# VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET}"
-VARIABLES="${VAR_N_BJETS}"
+VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET},${VAR_N_BJETS},${VAR_MT}"
 
 ulimit -s unlimited
 source utils/setup_root.sh
