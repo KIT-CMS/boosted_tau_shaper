@@ -261,7 +261,7 @@ def parse_arguments():
         "--num-processes", default=1, type=int, help="Number of processes to be used."
     )
     parser.add_argument(
-        "--num-threads", default=1, type=int, help="Number of threads to be used."
+        "--num-threads", default=4, type=int, help="Number of threads to be used."
     )
     parser.add_argument(
         "--skip-systematic-variations",
