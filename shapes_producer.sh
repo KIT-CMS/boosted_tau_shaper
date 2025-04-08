@@ -7,7 +7,7 @@ TAG=$4
 MODE=$5
 
 
-VARIABLES="fj_Xtm_msoftdrop"
+VARIABLES="mtt_coll_approx"
 POSTFIX="-ML"
 
 
