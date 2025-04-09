@@ -30,7 +30,7 @@ echo "BASEDIR: ${BASEDIR}"
 echo "output_shapes: ${output_shapes}"
 
 
-
+fj_softdrop_m_categories=("fj_wjets_enriched" "fj_tt_enriched" "fj_ggH_enriched")
 
 
 # if the output folder does not exist, create it
@@ -48,6 +48,46 @@ echo "##########################################################################
     echo "running xsec friends script"
     echo "XSEC_FRIENDS: ${XSEC_FRIENDS}"
     python3 friends/build_friend_tree.py --basepath $KINGMAKER_BASEDIR_XROOTD --outputpath root://cmsdcache-kit-disk.gridka.de/$XSEC_FRIENDS --nthreads 20
+fi
+
+
+fit_categories="fit_categories"
+
+if [[ $MODE == "SHAPES" ]]; then
+    echo "##############################################################################################"
+    echo "#      Producing shapes for ${CHANNEL}-${ERA}-${NTUPLETAG}                                         #"
+    echo "##############################################################################################"
+
+    # if the output folder does not exist, create it
+    if [ ! -d "$shapes_output" ]; then
+        mkdir -p $shapes_output
+    fi
+    
+    python shapes/produce_shapes_boosted_analyse.py --channels $CHANNEL \
+        --directory $NTUPLES \
+        --${CHANNEL}-friend-directory $XSEC_FRIENDS \
+        --era $ERA --num-processes 4 --num-threads 12 \
+        --optimization-level 1  \
+        --output-file $shapes_output$fit_categories \
+        --xrootd --validation-tag $TAG --boosted_tau_analysis \
+        --skip-systematic-variations 
+
+fi
+
+
+if [[ $MODE == "PLOT-CONTROL-CATEGOR" ]]; then
+    source utils/setup_root.sh
+    echo "##############################################################################################"
+    echo "#     plotting                                      #"
+    echo "##############################################################################################"
+
+        for CATEGORY in "${fj_softdrop_m_categories[@]}"
+    do
+         
+            python3 plotting/plot_shapes_control_boost_htt.py -l --era Run${ERA} --input ${shapes_output}${fit_categories}.root \
+            --variables ${VARIABLES} --channels ${CHANNEL}  --category $CATEGORY --boost  --scaleGGH --scaleZTT --blind-data
+        
+    done
 fi
 
 if [[ $MODE == "LOCAL" ]]; then

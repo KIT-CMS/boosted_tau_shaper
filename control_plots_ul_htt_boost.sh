@@ -17,7 +17,7 @@ VAR_COLL_APPROX="mtt_coll_approx"
 VAR_N_BJETS="nbtag"
 VAR_MT="mt_fatjet"
 
-VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET},${VAR_N_BJETS},${VAR_MT}"
+VARIABLES="${VAR_KINEM},${VAR_DISCR},${VAR_SUBJET},${VAR_FINALSTATE},${VAR_MU_TAU},${VAR_MET},${VAR_N_BJETS},${VAR_MT},${VAR_COLL_APPROX}"
 
 ulimit -s unlimited
 source utils/setup_root.sh

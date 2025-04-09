@@ -2,7 +2,7 @@ import numpy as np
 from ntuple_processor.utils import Selection
 from ntuple_processor import Histogram
 
-discriminator_variable = "fj_Xtm_msoftdrop"
+discriminator_variable = "mtt_coll_approx"
 discriminator_binning = np.arange(30, 205, 5)
 discriminator_binning_enlarged = np.arange(30, 160, 5)
 

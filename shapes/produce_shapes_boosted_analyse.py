@@ -542,49 +542,49 @@ def main(args):
         ##################################
         # SYSTEMATICS
         ############################
-        # if args.skip_systematic_variations:
-        #     pass
-        # else:
+        if args.skip_systematic_variations:
+            pass
+        else:
 
-        book_histograms(
-            um,
-            processes=boosted_proc- {"data"},
-            datasets=nominals[era]["units"][channel],
-            variations=[jet_es],
-            enable_check=do_check,
-        )
+            book_histograms(
+                um,
+                processes=boosted_proc- {"data"},
+                datasets=nominals[era]["units"][channel],
+                variations=[jet_es],
+                enable_check=do_check,
+            )
 
-        book_histograms(
-            um,
-            processes=boosted_proc- {"data"},
-            datasets=nominals[era]["units"][channel],
-            variations=[pileup_reweighting],
-            enable_check=do_check,
-        )
+            book_histograms(
+                um,
+                processes=boosted_proc- {"data"},
+                datasets=nominals[era]["units"][channel],
+                variations=[pileup_reweighting],
+                enable_check=do_check,
+            )
 
-        book_histograms(
-            um,
-            processes=boosted_proc- {"data"},
-            datasets=nominals[era]["units"][channel],
-            variations=[met_unclustered],
-            enable_check=do_check,
-        )
+            book_histograms(
+                um,
+                processes=boosted_proc- {"data"},
+                datasets=nominals[era]["units"][channel],
+                variations=[met_unclustered],
+                enable_check=do_check,
+            )
 
-        book_histograms(
-            um,
-            processes={"ttt"},
-            datasets=nominals[era]["units"][channel],
-            variations=[top_pt],
-            enable_check=do_check,
-        )
+            book_histograms(
+                um,
+                processes={"ttt"},
+                datasets=nominals[era]["units"][channel],
+                variations=[top_pt],
+                enable_check=do_check,
+            )
 
-        book_histograms(
-            um,
-            processes=boosted_proc- {"data"},
-            datasets=nominals[era]["units"][channel],
-            variations=[recoil_resolution, recoil_response],
-            enable_check=do_check,
-        )
+            book_histograms(
+                um,
+                processes=boosted_proc- {"data"},
+                datasets=nominals[era]["units"][channel],
+                variations=[recoil_resolution, recoil_response],
+                enable_check=do_check,
+            )
 
     # Step 2: convert units to graphs and merge them
     g_manager = GraphManager(um.booked_units, True)
