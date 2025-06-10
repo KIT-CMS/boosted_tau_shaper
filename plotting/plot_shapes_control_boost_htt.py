@@ -301,12 +301,6 @@ def main(info):
             process, "hist", fillcolor=styles.color_dict[process])
 
 
-    # if "mm" not in channel:
-    #     # add VH, ttH & HWW to total bkg histogram
-    #     total_bkg.Add(rootfile.get(channel, "VH125"))
-    #     total_bkg.Add(rootfile.get(channel, "ttH125"))
-    #     total_bkg.Add(rootfile.get(channel, "HWW"))
-
     plot.add_hist(total_bkg, "total_bkg")
     plot.setGraphStyle(
         "total_bkg",
@@ -361,9 +355,7 @@ def main(info):
         for i in plot_idx_to_add_signal:
             ggH = rootfile.get(channel, "ggH125",category=cat).Clone()
             qqH = rootfile.get(channel, "qqH125",category=cat).Clone()
-            # VH = rootfile.get(channel, "VH125").Clone()
-            # ttH = rootfile.get(channel, "ttH125").Clone()
-            # HWW = rootfile.get(channel, "HWW").Clone()
+
             if ggH.Integral() > 0:
                 ggH_scale = 10
             else:
@@ -372,18 +364,7 @@ def main(info):
                 qqH_scale = 10
             else:
                 qqH_scale = 0.0
-            # if VH.Integral() > 0:
-            #     VH_scale = 10
-            # else:
-            #     VH_scale = 0.0
-            # if ttH.Integral() > 0:
-            #     ttH_scale = 10
-            # else:
-            #     ttH_scale = 0.0
-            # if HWW.Integral() > 0:
-            #     HWW_scale = 10
-            # else:
-            #     HWW_scale = 0
+
 
             if i in [0,1]:
                 ggH.Scale(ggH_scale)
@@ -395,12 +376,7 @@ def main(info):
             plot.subplot(i).add_hist(ggH, "ggH_top")
             plot.subplot(i).add_hist(qqH, "qqH")
             plot.subplot(i).add_hist(qqH, "qqH_top")
-            # plot.subplot(i).add_hist(VH, "VH")
-            # plot.subplot(i).add_hist(VH, "VH_top")
-            # plot.subplot(i).add_hist(ttH, "ttH")
-            # plot.subplot(i).add_hist(ttH, "ttH_top")
-            # plot.subplot(i).add_hist(HWW, "HWW")
-            # plot.subplot(i).add_hist(HWW, "HWW_top")
+
 
         plot.subplot(0 if args.linear else 1).setGraphStyle(
             "ggH", "hist", linecolor=styles.color_dict["ggH"], linewidth=3)
@@ -408,15 +384,6 @@ def main(info):
         plot.subplot(0 if args.linear else 1).setGraphStyle(
             "qqH", "hist", linecolor=styles.color_dict["qqH"], linewidth=3)
         plot.subplot(0 if args.linear else 1).setGraphStyle("qqH_top", "hist", linecolor=0)
-        # plot.subplot(0 if args.linear else 1).setGraphStyle(
-        #     "VH", "hist", linecolor=styles.color_dict["VH"], linewidth=3)
-        # plot.subplot(0 if args.linear else 1).setGraphStyle("VH_top", "hist", linecolor=0)
-        # plot.subplot(0 if args.linear else 1).setGraphStyle(
-        #     "ttH", "hist", linecolor=styles.color_dict["ttH"], linewidth=3)
-        # plot.subplot(0 if args.linear else 1).setGraphStyle("ttH_top", "hist", linecolor=0)
-        # plot.subplot(0 if args.linear else 1).setGraphStyle(
-        #     "HWW", "hist", linecolor=styles.color_dict["HWW"], linewidth=3)
-        # plot.subplot(0 if args.linear else 1).setGraphStyle("HWW_top", "hist", linecolor=0)
 
 
         # assemble ratio
@@ -526,8 +493,6 @@ def main(info):
     if not channel == "tt" and category in ["11", "12", "13", "14", "15", "16"]:
         plot.subplot(2).changeXLabels(["0.2", "0.4", "0.6", "0.8", "1.0"])
 
-    # draw subplots. Argument contains names of objects to be drawn in corresponding order.
-    # procs_to_draw = ["stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top", "VH", "VH_top", "ttH", "ttH_top", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
     if args.add_signals:
         procs_to_draw = ["stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top", "data_obs"] if args.linear else ["stack", "total_bkg", "data_obs"]
     else:
@@ -537,17 +502,7 @@ def main(info):
                 procs_to_draw.append("scaledZTT")
             if args.scaleGGH:
                 procs_to_draw.append("scaledGGH")
-        #     if args.scaleZTT:
-        #         procs_to_draw = ["stack", "total_bkg", "scaledZTT", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledZTT", "data_obs"]
-        #     if args.scaleGGH:
-        #         procs_to_draw = ["stack", "total_bkg", "scaledGGH", "data_obs"] if args.linear else ["stack", "total_bkg", "scaledGGH", "data_obs"]
         
-        # if args.blind_data:
-        #     procs_to_draw = ["stack", "total_bkg"] if args.linear else ["stack", "total_bkg"]
-        #     if args.scaleZTT:
-        #         procs_to_draw = ["stack", "total_bkg", "scaledZTT"] if args.linear else ["stack", "total_bkg", "scaledZTT"]
-        #     if args.scaleGGH:
-        #         procs_to_draw = ["stack", "total_bkg", "scaledGGH"] if args.linear else ["stack", "total_bkg", "scaledGGH"]
         if args.blind_data:
             procs_to_draw = ["stack", "total_bkg"] if args.linear else ["stack", "total_bkg"]
             if args.scaleZTT:
@@ -558,10 +513,7 @@ def main(info):
         procs_to_draw = ["stack", "total_bkg", "data_obs"]
     plot.subplot(0).Draw(procs_to_draw)
     if args.linear != True:
-        # plot.subplot(1).Draw([
-        #     "stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top",
-        #     "VH", "VH_top", "ttH", "ttH_top", "HWW", "HWW_top", "data_obs"
-        # ])
+        
         if args.add_signals:
             plot.subplot(1).Draw([
                 "stack", "total_bkg", "ggH", "ggH_top", "qqH", "qqH_top",
@@ -612,9 +564,7 @@ def main(info):
         if args.add_signals:
             plot.legend(i).add_entry(0 if args.linear else 1, "ggH%s" % suffix[i], "%s #times gg#rightarrowH"%str(int(ggH_scale)), 'l')
             plot.legend(i).add_entry(0 if args.linear else 1, "qqH%s" % suffix[i], "%s #times qq#rightarrowH"%str(int(qqH_scale)), 'l')
-            # plot.legend(i).add_entry(0 if args.linear else 1, "VH%s" % suffix[i], "%s #times V(lep)H"%str(int(VH_scale)), 'l')
-            # plot.legend(i).add_entry(0 if args.linear else 1, "ttH%s" % suffix[i], "%s #times ttH"%str(int(ttH_scale)), 'l')
-            # # plot.legend(i).add_entry(0 if args.linear else 1, "HWW%s" % suffix[i], "%s #times H#rightarrowWW"%str(int(HWW_scale)), 'l')
+           
         if not args.blind_data:
             plot.legend(i).add_entry(0, "data_obs", "Observed", 'PE2L')
         plot.legend(i).setNColumns(3)
