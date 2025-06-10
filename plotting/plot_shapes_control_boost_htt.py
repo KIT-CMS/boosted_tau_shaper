@@ -341,7 +341,7 @@ def main(info):
         scaledGGH_hist = rootfile.get_boost_file(channel, "GGH", category=cat, shape_type=stype).Clone()
         w_hist = rootfile.get(channel, "W", category=cat, shape_type=stype).Clone()
         if scaledGGH_hist.Integral() > 0:
-            scaledGGH_scale = 250
+            scaledGGH_scale = 50
         scaledGGH_hist.Scale(scaledGGH_scale)
         plot.add_hist(scaledGGH_hist, "scaledGGH", "scaledGGH")
         plot.subplot(0).setGraphStyle("scaledGGH", "hist", linecolor=styles.color_dict["ggH"], linewidth=2)
