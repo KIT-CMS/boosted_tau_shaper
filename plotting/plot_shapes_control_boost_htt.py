@@ -648,7 +648,7 @@ def main(info):
     plot.legend(3).Draw()
 
     # draw additional labels
-    plot.DrawCMS(thesisstyle=True, preliminary=False)
+    plot.DrawCMS(thesisstyle=True, preliminary=True)
     if "2016postVFP" in args.era:
         plot.DrawLumi("16.8 fb^{-1} (2016UL postVFP, 13 TeV)")
     elif "2016preVFP" in args.era:
