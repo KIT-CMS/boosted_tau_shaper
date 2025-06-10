@@ -330,6 +330,9 @@ def main(info):
         plot.add_hist(scaledZTT_hist, "scaledZTT", "scaledZTT")
         plot.subplot(0).setGraphStyle("scaledZTT", "hist", linecolor=styles.color_dict["HWW"], linewidth=2)
 
+        bkg_processes.remove("ZTT")
+        legend_bkg_processes.remove("ZTT")
+
     if args.scaleGGH:
         scaledGGH_scale = 0
         scaledGGH_hist = rootfile.get_boost_file(channel, "GGH", category=cat, shape_type=stype).Clone()
