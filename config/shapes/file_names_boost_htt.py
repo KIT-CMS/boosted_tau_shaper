@@ -248,13 +248,27 @@ files = {
                 ],
                 "W": [
 
-                    "WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8",
+                    
+                    "WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-100To200_1737472169-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-200To400_1736873492-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-400To600_1736873492-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-600To800_1736873492-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-800To1200_1734539918-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-1200To2500_1734539918-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-2500ToInf_1736873492-00000000000000000000000000000000",
                    
                 ],
 
                 "W_NLO": [
 
-                    "WJetsToLNu_TuneCP5_13TeV-madgraphMLM-pythia8",
+            
+                    "WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-100To200_1737472169-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-200To400_1736873492-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-400To600_1736873492-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-600To800_1736873492-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-800To1200_1734539918-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-1200To2500_1734539918-00000000000000000000000000000000",
+                    "WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8_sdaigler-mc_2018UL_WJetsToLNu_WJetsToLNu_HT-2500ToInf_1736873492-00000000000000000000000000000000",
                    
                 ],
             },
