@@ -1,5 +1,5 @@
 universe = docker
-docker_image = cverstege/alma9-base
+docker_image = cverstege/alma9-gridjob
 executable = submit/single_graph_job.sh
 
 Requirements = ( (Target.ProvidesCPU == True) && (Target.ProvidesIO == True) && (TARGET.ProvidesEKPResources == True ) )
