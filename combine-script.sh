@@ -164,6 +164,19 @@ if [[ $MODE == "POSTFIT" ]]; then
 
 fi
 
+if [[ $MODE == "POSTFIT_FROM_WORKSPACE" ]]; then
+   source utils/setup_cmssw.sh
+
+
+    PostFitShapesFromWorkspace -w output/$datacard_output/cmb/output_multicat.root \
+    -d output/$datacard_output/cmb/combined.txt.cmb \
+    -f output/$datacard_output/cmb/fitDiagnostics.${ERA}.root:fit_s \
+    --output output/$datacard_output/cmb/postfit_shapes.root \
+    --postfit --mass 125
+
+
+fi
+
 if [[ $MODE == "POSTFIT_PLOT" ]]; then
    source utils/setup_cmssw.sh
 
@@ -186,4 +199,18 @@ if [[ $MODE == "POSTFIT_PLOT" ]]; then
 
     done
 
+fi
+
+
+if [[ $MODE == "DIFF_NUI" ]]; then
+  source utils/setup_cmssw.sh
+
+  python3 /work/olavoryk/tau_pog_tau_sfs/boost_htt_v15Frb/boosted_tau_shaper/CMSSW_14_1_0_pre4/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py output/$datacard_output/cmb/fitDiagnostics.${ERA}.root -g pulls.root
+fi
+
+
+if [[ $MODE == "NUI_CORR" ]]; then
+  source utils/setup_cmssw.sh
+
+  python3 /work/olavoryk/tau_pog_tau_sfs/boost_htt_v15Frb/boosted_tau_shaper/CMSSW_14_1_0_pre4/src/HiggsAnalysis/CombinedLimit/test/diffNuisances.py output/$datacard_output/cmb/fitDiagnostics.${ERA}.root --all  -g correlation.root
 fi
