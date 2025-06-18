@@ -151,18 +151,6 @@ def main(args):
     }
     # bkgs+stage1
     category_dict = {
-        # "1": "Pt20to25",
-        # "2": "Pt25to30",
-        # "3": "Pt30to35",
-        # "4": "Pt35to40",
-        # "5": "PtGt40",
-        # "6": "Inclusive",
-        # "7": "DM0",
-        # "8": "DM1",
-        # "9": "DM10_11",
-        # "10": "DM10",
-        # "11": "DM11",
-        # "100": "Control Region"
 
         "1": "fj_wjets_enriched",
         "2": "fj_tt_enriched",
@@ -199,7 +187,7 @@ def main(args):
     #     ]
     # bkg_processes = ["QCD", "VVJ", "VVL", "W", "TTJ", "TTL", "ZJ", "ZL", "EMB"]
     # bkg_processes = ["QCD", "VVJ", "VVL", "W", "TTJ", "TTL", "ZJ", "ZL", "EMB_"+str(args.single_category)]
-    bkg_processes = ["W", "QCDJETS", "ZTT_NLO", "TTT", "VVT", ]
+    bkg_processes = ["W", "QCDJETS", "ZTT_NLO", "TTT", "VVT"]
     all_bkg_processes = [b for b in bkg_processes]
     legend_bkg_processes = copy.deepcopy(bkg_processes)
     legend_bkg_processes.reverse()
@@ -271,16 +259,37 @@ def main(args):
         # plot.setGraphStyle(
         #         bkg_processes[-1], "hist", fillcolor=styles.color_dict["EMB"]
         #     )
+
+
+        signal_name = f"GGH_{category_dict[category]}"
+        try:
+
+            signal_hist = rootfile.get(era, channel, category, signal_name)
+            print(f"Scaled integral of signal ({signal_name}): {signal_hist.Integral():.2f}")
+
+            if signal_hist.Integral() > 0:
+                scaledGGH_scale = 50
+                signal_hist.Scale(scaledGGH_scale)
+
+            plot.add_hist(signal_hist, "signal")
+            plot.setGraphStyle("signal", "hist", linecolor=styles.color_dict.get("GGH", 2), linewidth=3)
+        except Exception as e:
+            logger.warning(f"Signal {signal_name} not found in ROOT file: {e}")
+
+
         data_obs = rootfile.get(era, channel, category, "data_obs")
         plot.add_hist(data_obs, "data_obs")
 
-        total_bkg = rootfile.get(era, channel, category, "total_background")
+        total_bkg = rootfile.get(era, channel, category, "TotalBkg")
         plot.add_hist(total_bkg, "total_bkg")
 
-        total_sig = rootfile.get(era, channel, category, "total_signal")
+        total_sig = rootfile.get(era, channel, category, "TotalSig")
         plot.add_hist(total_sig, "total_sig")
 
         model_total = plot.subplot(2).get_hist("total_bkg")
+        for i in range(1, model_total.GetNbinsX() + 1):
+            print(f"Bin {i}: content = {model_total.GetBinContent(i)}, error = {model_total.GetBinError(i)}")
+
         model_total.Add(plot.subplot(2).get_hist("total_sig"))
         plot.add_hist(model_total, "model_total")
         plot.subplot(0).setGraphStyle("data_obs", "e0")
@@ -341,11 +350,11 @@ def main(args):
         # draw subplots. Argument contains names of objects to be drawn in
         # corresponding order.
 
-        procs_to_draw_0 = (
-            ["stack", "model_total", "data_obs"]
-            if args.linear
-            else ["stack", "model_total", "data_obs"]
-        )
+
+        procs_to_draw_0 = ["stack", "model_total", "data_obs"]
+        if "signal" in plot.subplot(0)._hists:
+            procs_to_draw_0.append("signal")
+
         procs_to_draw_1 = ["stack", "model_total", "data_obs"]
         procs_to_draw_2 = [
             "model_total",
@@ -371,7 +380,10 @@ def main(args):
                 except BaseException:
                     pass
             # if channel != "mm":
-            plot.legend(i).add_entry(0, legend_bkg_processes[0], f"{legend_bkg_processes[0]}" , "f")
+            if "signal" in plot.subplot(0)._hists:
+                # plot.legend(i).add_entry(0, "signal", "ggH", "l")
+                plot.legend(i).add_entry(0, "signal", "gg#rightarrow H#times 50", "l")
+
             # plot.legend(i).add_entry(0, "total_bkg", "Bkg. unc.", "f")
             plot.legend(i).add_entry(0, "model_total", "Bkg. unc.", "f")
             plot.legend(i).add_entry(0, "data_obs", "Data", "PE")
